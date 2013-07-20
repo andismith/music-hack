@@ -18,7 +18,7 @@ module.exports = function (grunt) {
       all: {
         files: [{
           expand: true,
-          src: ['*/**.css'],
+          src: ['public/css/**.css'],
           ext: '.css'
         }]
       }
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
         force: true // allow build to continue with errors
       },
       dev: {
-        src: ['js/**/*.js', '!node_modules/*/**.js', '!js/libs/**/*.js']
+        src: ['public/js/**/*.js', '!node_modules/*/**.js', '!js/libs/**/*.js']
       },
       gruntfile: {
         src: ['Gruntfile.js']
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
 
     jsonlint: {
       dev: {
-        src: ['data/*.json']
+        src: ['public/data/*.json']
       }
     },
 
@@ -70,8 +70,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           src: ['**/*.scss', '!**/_*.scss'],
-          cwd: '/sass',
-          dest: '/css',
+          cwd: 'public/sass',
+          dest: 'public/css',
           ext: '.css'
         }]
       },
@@ -82,8 +82,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           src: ['**/*.scss', '!**/_*.scss'],
-          cwd: '/sass',
-          dest: '/css',
+          cwd: 'public/sass',
+          dest: 'public/css',
           ext: '.min.css'
         }]
       }
@@ -99,15 +99,15 @@ module.exports = function (grunt) {
         tasks: ['jshint:gruntfile']
       },
       json: {
-        files: ['data/*.json', '!data/*.assemble.json'],
+        files: ['public/data/*.json', '!data/*.assemble.json'],
         tasks: ['jsonlint']
       },
       sass: {
-        files: ['sass/**/*.scss'],
+        files: ['public/sass/*.scss'],
         tasks: ['sass:dev', 'autoprefixer']
       },
       scripts: {
-        files: ['js/**/*.js'],
+        files: ['public/js/**/*.js'],
         tasks: ['jshint:dev']
       }
     }
@@ -120,7 +120,7 @@ module.exports = function (grunt) {
 
   /* TASKS =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
-  grunt.registerTask('build', ['jshint:gruntfile','sass:dev', 'autoprefixer', 'jsonlint', 'jshint:dev']);
+  grunt.registerTask('build', ['jshint:gruntfile', 'sass:dev', 'autoprefixer', 'jsonlint', 'jshint:dev']);
   grunt.registerTask('default', ['build', 'watch']);
 
 };

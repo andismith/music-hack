@@ -1,27 +1,65 @@
 @import "libs/_normalize-1.1.2";
 @import "_vars";
 
-
+* {
+    box-sizing: border-box;
+}
 
 body {
     background: $background-color;
+    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: lighter;
     color: $text-color;
-    margin: 20px;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 15px;
 }
 
-a {
-    text-decoration: none;
-    
-    &:hover {
-        
-    }
+.container {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-weight: lighter;
+    text-align: center;
+    font-size: 70px;
+    text-transform: uppercase;
+}
+
+.intro {
+    text-align: center;
+    font-size: 18px;
+}
+
+.name {
+    display: block;
+    outline: none;
+    border: none;
+    margin: 60px auto 0;
+    padding: 15px;
+    width: 100%;
+    max-width: 320px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 3px;
 }
 
 .button {
-    background: green;
-    border-radius: 8px;
-    color: white;
     display: block;
-    padding: 10px;
+    max-width: 320px;
+    width: 100%;
     text-align: center;
+    font-size: 40px;
+    color: inherit;
+    text-decoration: none;
+    margin: 15px auto 0;
+    padding: 10px;
+    border-radius: 3px;
+    background: #5cb85c;
+
+    &:hover {
+        background: #50b350;
+    }
 }

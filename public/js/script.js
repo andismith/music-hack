@@ -30,6 +30,7 @@ window.music = window.music || {};
     request.send();
   }
 
+  // Play sound
   function playSound(buffer) {
     var source = context.createBufferSource(); // creates a sound source
     source.buffer = buffer;                    // tell the source which sound to play
@@ -37,10 +38,31 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
+  // Start the game
+  function startGame() {
+    
+  }
+
+  // Init events
+  function initEvents() {
+    var $play = $("#play");
+
+    $play.on('click', function(e) {
+      e.preventDefault();
+    });
+  }
+
+  // Init any included plugins
+  function initPlugins() {
+    $('h1').fitText();
+  }
+
+  // Init
   function init() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
 
+    initPlugins();
     loadSound(SAMPLE_URL);
   }
 

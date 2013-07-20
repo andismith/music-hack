@@ -12,9 +12,6 @@
 		require('./bin/config/routes.js')(app);
 		configureExpress();
 
-		
-
-
 	function configureExpress() {
 		console.log("configuring express", __dirname);
 		app.configure(function () {
