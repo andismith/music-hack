@@ -3,7 +3,7 @@ var mongodb = require('../../bin/data_access/mongodb');
 describe("Reading from MongoDB", function(){
 	var NAME = "My Name",
 		EMAIL = "my@email.com",
-		ACCOUNT = {name: NAME, email: EMAIL, date: new Date()},
+		ACCOUNT = {name: NAME, email: EMAIL, timestamp: new Date()},
 		value,
 		flag;
 		
@@ -20,17 +20,17 @@ describe("Reading from MongoDB", function(){
 		// When
 		runs(function() {
 			flag = false;
-			mongodb.find("email", EMAIL, function(results) {
-				var result = results[0];
-				name = result.name;
-				email = result.email;
+			mongodb.findLatest(function(doc) {
+				name = doc.name;
+				email = doc.email;
+				console.log(doc.timestamp);
 				flag = true;
 			});
 		});
 		
 		waitsFor(function(){
 			return flag;
-		}, 'the correct records should be returned', 200);
+		}, 'the correct records should be returned', 50);
 		
 		// Then
 		runs(function() {

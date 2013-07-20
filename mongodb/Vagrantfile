@@ -5,6 +5,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "base"
 
+  config.vm.hostname = "mongodb"
+
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   config.vm.provision :chef_solo do |chef|
@@ -14,4 +16,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "mongodb"
   end
 
+end
+
+Vagrant::Config.run do |config|
+  config.vm.forward_port 27017, 27017
 end
