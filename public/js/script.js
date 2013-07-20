@@ -58,8 +58,8 @@ window.music = window.music || {};
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
 
-    initPlugins();
-    loadSound(SAMPLE_URL);
+    //initPlugins();
+    //loadSound(SAMPLE_URL);
   }
 
   samplePlayer.init = init;
