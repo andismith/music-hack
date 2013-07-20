@@ -2,7 +2,8 @@
 /*jshint bitwise:false, curly:true, eqeqeq:true, forin:true, immed:true, latedef:true, newcap:true, noarg:true, noempty:false, nonew:true, plusplus:false, regexp:false, undef:true, strict:true, trailing:true, expr:true, regexdash:true, browser:true, jquery:true, onevar:true */
 /*global require:false, process:false, console:false, __dirname:false, exports:false */
 (function () {
-    "use strict";
+    'use strict';
+
 	var nokiaAPI = require('../nokia-api/stream'),
 		config = require('../config/app_config'),
 		songsSearchResults;
@@ -14,21 +15,38 @@
 		}
 
 		module.exports = function(app) {
+
 			var resultCount;
 
 			app.get('/', function (req, res){ 
 
 
-				var parsedResults = JSON.parse(songsSearchResults),
+				// var parsedResults = JSON.parse(songsSearchResults),
+				// 	randomId = pickRandomId(parsedResults.tracklist);
+					
+				// 	resultCount = parsedResults.tracklist.length;
+				// 	//randomList(parsedResults.tracklist);
+
+				// res.render('index', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});			
+			});
+
+            app.get('/play', function(req, res) {
+            	var parsedResults = JSON.parse(songsSearchResults),
 					randomId = pickRandomId(parsedResults.tracklist);
 					
 					resultCount = parsedResults.tracklist.length;
 					//randomList(parsedResults.tracklist);
 
-				res.render('index', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});			
-			});
+				res.render('question', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});	
+//{{selected}}
+				// {{#each results}}
+    //     <li>{{this}}</li>
+    //   {{/each}}
+    // </ul>
+                //res.render('question', JSON.parse(songsSearchResults));
+            });
+
             app.get('/web-audio-test', function (req, res){
-                res.header('Access-Control-Allow-Origin', '*');
                 res.render('web-audio-test', res);           
             });
 

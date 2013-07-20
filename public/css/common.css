@@ -552,23 +552,112 @@ table {
   border-spacing: 0;
 }
 
-body {
-  background: white;
-  color: black;
-  margin: 20px;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
+body {
+  background: #2e2f2f;
+  font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  color: white;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 15px;
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: lighter;
+  text-align: center;
+  font-size: 70px;
+  text-transform: uppercase;
+}
+
+.intro {
+  text-align: center;
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 640px) {
+  .intro {
+    font-size: 18px;
+  }
+}
+
+.name {
+  display: block;
+  outline: none;
+  border: none;
+  margin: 60px auto 0;
+  padding: 15px;
+  width: 100%;
+  max-width: 320px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.countdown {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.countdown li {
+  border-radius: 50%;
+  color: white;
+  display: none;
+  font-size: 6em;
+  height: 200px;
+  line-height: 200px;
+  width: 200px;
+  text-align: center;
+}
+
+.countdown li.active {
+  display: block;
+}
+
+.countdown li.count-3 {
+  background: #5c74b8;
+}
+
+.countdown li.count-2 {
+  background: #e2bd63;
+}
+
+.countdown li.count-1 {
+  background: #a52f42;
+}
+
+.countdown li.count-go {
+  background: #5cb85c;
 }
 
 .button {
-  background: green;
-  border-radius: 8px;
-  color: white;
   display: block;
-  padding: 10px;
+  max-width: 320px;
+  width: 100%;
   text-align: center;
+  font-size: 40px;
+  color: inherit;
+  text-decoration: none;
+  margin: 15px auto 0;
+  padding: 10px;
+  border-radius: 3px;
+  background: #5cb85c;
+}
+
+.button:hover {
+  background: #50b350;
 }
 
 /*# sourceMappingURL=common.css.map */
