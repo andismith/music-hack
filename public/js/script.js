@@ -126,15 +126,21 @@ window.music.samplePlayer.init();
       setTimeout(function() {
         countdown(++i);
       }, 500);
+    } else {
+      showQuestion();
     }
+  }
+
+  function loadAudio() {
+    $songSample.get(0).load();
+    $songSample.on('loadeddata', function() {
+      countdown(0);
+    });
   }
 
   function initEvents() {
     console.log('init events');
-    $goButton.on('click', showQuestion);
-    $songSample.on('loadeddata', function() {
-      countdown(0);
-    });
+    $goButton.on('click', loadAudio);
   }
 
   function init() {
