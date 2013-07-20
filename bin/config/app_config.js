@@ -5,7 +5,7 @@ exports.AppConfig = {
         app_id: '_WN7DlNjki_uTKc7kY1A'
     },
     Results: {
-        count: 5
+        count: 3
     },
     Templates: {
         path: __dirname + '/../templates/',

@@ -16,7 +16,8 @@
 
 		module.exports = function(app) {
 
-			var resultCount;
+			var resultCount,
+				randomNumber;
 
 			app.get('/', function (req, res){ 
 
@@ -31,19 +32,13 @@
 			});
 
             app.get('/play', function(req, res) {
-            	var parsedResults = JSON.parse(songsSearchResults),
-					randomId = pickRandomId(parsedResults.tracklist);
+            	var parsedResults = JSON.parse(songsSearchResults);
+            		resultCount = parsedResults.tracklist.length;
+				var	randomId = pickRandomId(parsedResults.tracklist);
 					
-					resultCount = parsedResults.tracklist.length;
-					console.log(randomList(parsedResults.tracklist));
 
 				res.render('question', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});	
-//{{selected}}
-				// {{#each results}}
-    //     <li>{{this}}</li>
-    //   {{/each}}
-    // </ul>
-                //res.render('question', JSON.parse(songsSearchResults));
+
             });
 
             app.get('/web-audio-test', function (req, res){
@@ -51,25 +46,49 @@
             });
 
             function pickRandomId(results) {
-            	//console.log(results)
-            	var randomNumber = Math.floor((Math.random()*+config.AppConfig.Results.count));
-
+            	randomNumber = Math.floor((Math.random()*resultCount));
             	return results[randomNumber].id;
 	        }
 
-	        function randomList(results) {
-	        	var arr = [];
-	        		arr.length =0;
-				while(arr.length < config.AppConfig.Results.count){
-				  var randomnumber=Math.floor(Math.random()+(resultCount-1));
-				  var found=false;
-				  for(var i=0;i<arr.length;i++){
-				    if(arr[i]==randomnumber){found=true;break}
-				  }
-				  if(!found)arr[arr.length]=results[i].name;
-				}
-				return arr;
+	        function randomList(results) {        	
 
-	        }	     		
+	        	var arr = [],
+	        		pickedSongs = {};
+				while(arr.length < config.AppConfig.Results.count){
+					var randomnumber=Math.ceil(Math.random()*resultCount)
+					  var found=false;
+					  for(var i=0;i<arr.length;i++){
+					    if(arr[i]==randomnumber){found=true;break}
+					  }
+					  if(!found)arr[arr.length]=[results[randomnumber].id, results[randomnumber].name];
+				}
+				
+				arr.push([results[randomNumber].id, results[randomNumber].name]);
+				arr = randomiseArray(arr);
+				console.log(arr)
+				return arr;
+	        }	    
+
+	        function randomiseArray(array){
+	        	var currentIndex = array.length,
+					temporaryValue,
+					randomIndex;
+
+					// While there remain elements to shuffle...
+					while (0 !== currentIndex) {
+
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
+
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
+					}
+
+					return array;
+	        } 		
+
 		};
 }());
