@@ -54,6 +54,21 @@ window.music = window.music || {};
     }
   }
 
+  // Select an answer
+  function selectAnswer() {
+    var $item = $('.options').find('a'),
+        $selectedPrompt = $('.selected');
+
+    $item.on('click', function(e) {
+      e.preventDefault();
+
+      $item.removeClass('active');
+      $(this).addClass('active');
+
+      $selectedPrompt.show().find('p').html($(this).text());
+    });
+  }
+
   // Init any included plugins
   function initPlugins() {
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
@@ -83,6 +98,7 @@ window.music = window.music || {};
     context = new AudioContext();
 
     initPlugins();
+    selectAnswer();
     handleAnimation('.options li', true);
     //loadSound(SAMPLE_URL);
   }
