@@ -3,7 +3,8 @@ module.exports = (function(){
 		format = require('util').format,
 		config = require('../config/app_config'),
 		conn_string = config.AppConfig.MongoDB.conn_string,
-		collection = config.AppConfig.MongoDB.collection;
+		collection = config.AppConfig.MongoDB.collection,
+		mongodb;
 
 	function handleError(err) {
 		if (err) {
@@ -42,7 +43,7 @@ module.exports = (function(){
 		});
 	};
 	
-	var mongodb = {
+	mongodb = {
 		insert: insert,
 		findLatest: findLatest
 	};

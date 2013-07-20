@@ -1,16 +1,15 @@
-var mongodb = require('../../bin/data_access/mongodb');
-var sortDir = require('../../bin/data_access/sort-direction');
+var redis = require('../../bin/data_access/redis');
 
-describe("Reading from MongoDB", function(){
-	var NAME = "My Name",
-		EMAIL = "my@email.com",
-		SORT_FIELD = 'timestamp',
-		ACCOUNT = {name: NAME, email: EMAIL, SORT_FIELD: new Date()},
+describe("Writing to Redis", function(){
+	/*
+	var SCREEN_NAME = "My Name",
+		SCORE = 123456,
+		TIMESTAMP = 'timestamp',
+		client,
 		flag;
 		
 	beforeEach(function(){
-		var testRecord = JSON.stringify(ACCOUNT);
-		mongodb.insert(testRecord);
+		client = redis.createClient;
 	});
 
 	it("should read database", function() {
@@ -38,4 +37,4 @@ describe("Reading from MongoDB", function(){
 			expect(email).toMatch(EMAIL);
 	    });
 	});
-});
+*/});

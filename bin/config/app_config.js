@@ -17,5 +17,9 @@ exports.AppConfig = {
 	MongoDB: {
 		conn_string: 'mongodb://127.0.0.1:27017/leaderboards',
 		collection: 'all'
+	},
+	Redis: {
+		host: '127.0.0.1',
+		port: 6379
 	}
 };
