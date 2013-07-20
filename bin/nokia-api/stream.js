@@ -3,14 +3,15 @@
 (function () {
     "use strict";
     var config = require('../config/app_config'),
-        express = require('express'),
-        app = express();
+        request = require('request');
 
     exports.NokiaMusic = function() {       
         
-        function getRandomSong(callback) {            
-            app.get('http://api.ent.nokia.com/1.x/gb/?products=charts&category=single&domain=music&app_id=_WN7DlNjki_uTKc7kY1A', function(req,res){
-                console.log("requesting"+res);
+        function getRandomSong(callback) { 
+            request('http://api.ent.nokia.com/1.x/gb/?products=charts&category=single&domain=music&app_id=_WN7DlNjki_uTKc7kY1A&itemsperpage='+config.AppConfig.Results.count, function (error, response, body) {
+                //var parsedJSON = JSON.parse(body).items;
+
+                callback(body);
             });
         }
 

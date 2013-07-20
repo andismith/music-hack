@@ -11,7 +11,7 @@
 		console.log("get songs");
 
 		function songsRetrieved(songs) {
-			songsSearchResults = songs;
+			songsSearchResults = JSON.parse(songs);
 		}
 
 		module.exports = function(app) {
