@@ -59,23 +59,7 @@ window.music = window.music || {};
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
-  function countdown(i) {
-    var $countdown = $('.countdown li'),
-      length = $countdown.length;
 
-    if (typeof i === 'undefined') {
-      i = 0;
-    }
-
-    if (i < length) {
-      $countdown.removeClass('active');
-      $countdown.eq(i).addClass('active');
-
-      setTimeout(function() {
-        countdown(++i);
-      }, 500);
-    }
-  }
 
   // Init
   function init() {
@@ -87,9 +71,54 @@ window.music = window.music || {};
     //loadSound(SAMPLE_URL);
   }
 
-  samplePlayer.countdown = countdown;
   samplePlayer.init = init;
 
 }(window.music.samplePlayer = window.music.samplePlayer || {}));
 
 window.music.samplePlayer.init();
+
+(function(question, $) {
+
+  function countdown(i) {
+    var $countdown = $('.countdown li'),
+      length = $countdown.length;
+
+    if (typeof i === 'undefined') {
+      i = 0;
+    }
+    console.log(i);
+
+    if (i < length) {
+      $countdown.removeClass('active');
+      $countdown.eq(i).addClass('active');
+
+      setTimeout(function() {
+        countdown(++i);
+      }, 500);
+    }
+  }
+
+  function init() {
+    countdown();
+  }
+
+  question.init = init;
+
+}(window.music.question = window.music.question || {}, jQuery));
+
+(function(music, $) {
+
+  var $body = $('body');
+
+  function init() {
+    var pageId = $body.data('page-id');
+
+    if (pageId !== undefined && window.music[pageId]) {
+      window.music[pageId].init();
+    }
+
+  }
+
+  music.init = init;
+
+})(window.music = window.music || {}, jQuery);
