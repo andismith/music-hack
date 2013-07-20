@@ -23,7 +23,7 @@
   </head>
   <body data-page-id="question">
 
-    <div class="site-wrapper">
+    <div class="container">
       <h1>MusicMatch.io</h1>
 
       <audio id="song-{{selected}}" src="http://api.ent.nokia.com/1.x/gb/products/{{selected}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio>
@@ -45,11 +45,17 @@
 
         <ul class="options">
           {{#each results}}
-          <li><a href="#">{{ this }}</a></li>
+          <li><a href="#" data-icon="check">{{ this }}</a></li>
           {{/each}}
         </ul>
 
       </section>
+
+      <div class="selected">
+        <h2>You Selected:</h2>
+        <p></p>
+      </div>
+
     </div>
    
     <script src="/js/libs/jquery-1.10.2.min.js"></script>

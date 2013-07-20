@@ -15,10 +15,35 @@ body {
     padding: 15px;
 }
 
+@font-face {
+    font-family: 'Flat-UI-Icons';
+    src: url('/fonts/icons.eot');
+    src: url('/fonts/icons.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/icons.woff') format('woff'), 
+    url('/fonts/icons.ttf') format('truetype'), 
+    url('/fonts/icons.svg#icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[data-icon]:after {
+    display: none;
+    position: absolute;
+    top: 17px;
+    right: 20px;
+    font-family: 'Flat-UI-Icons';
+    content: attr(data-icon);
+    speak: none;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    font-smoothing: antialiased;
+}
+
 .container {
     width: 100%;
     max-width: 640px;
-    margin: 0 auto;
+    margin: 0 auto; 
 }
 
 h1 {
@@ -26,6 +51,10 @@ h1 {
     text-align: center;
     font-size: 70px;
     text-transform: uppercase;
+}
+
+h2 {
+    font-weight: lighter;
 }
 
 .intro {
@@ -118,6 +147,7 @@ h1 {
         transform: translateX(-100%);
 
         a {
+            position: relative;
             display: block;
             list-style: none;
             margin: 10px auto;
@@ -128,11 +158,24 @@ h1 {
             text-decoration: none;
             outline: none;
             text-align: center;
-            background: #f0ad4e;
+            background: #3498DB;
             border-radius: 3px;
 
             &:hover {
-                background: #eea236;
+                background: #2980B9;
+            }
+
+            &.active {
+                background-color: #5cb85c;
+            }
+
+            &:hover:after,
+            &.active:after {
+                display: block;
+            }
+
+            &:after {
+                content: "\e00a";
             }
         }
     }
@@ -146,4 +189,27 @@ h1 {
 .options li.play {
     transform: translateX(0);
     opacity: 1;
+}
+
+.selected {
+    display: none;
+    max-width: 320px;
+    margin: 30px auto 0;
+    padding: 20px;
+    background: #E67E22;
+    border-radius: 3px;
+
+    h2,
+    p {
+        text-align: center;
+        margin: 0;
+    }
+
+    h2 {
+        margin-bottom: 5px;
+    }
+
+    p {
+        font-style: italic;
+    }
 }

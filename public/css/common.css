@@ -559,13 +559,35 @@ table {
 }
 
 body {
-  background: #2e2f2f;
+  background: #1a252f;
   font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: lighter;
   color: white;
   letter-spacing: 1px;
   margin: 0;
   padding: 15px;
+}
+
+@font-face {
+  font-family: 'Flat-UI-Icons';
+  src: url("/fonts/icons.eot");
+  src: url("/fonts/icons.eot?#iefix") format("embedded-opentype"), url("/fonts/icons.woff") format("woff"), url("/fonts/icons.ttf") format("truetype"), url("/fonts/icons.svg#icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:after {
+  display: none;
+  position: absolute;
+  top: 17px;
+  right: 20px;
+  font-family: 'Flat-UI-Icons';
+  content: attr(data-icon);
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-smoothing: antialiased;
 }
 
 .container {
@@ -579,6 +601,10 @@ h1 {
   text-align: center;
   font-size: 70px;
   text-transform: uppercase;
+}
+
+h2 {
+  font-weight: lighter;
 }
 
 .intro {
@@ -677,6 +703,7 @@ h1 {
 }
 
 .options li a {
+  position: relative;
   display: block;
   list-style: none;
   margin: 10px auto;
@@ -687,12 +714,25 @@ h1 {
   text-decoration: none;
   outline: none;
   text-align: center;
-  background: #f0ad4e;
+  background: #3498DB;
   border-radius: 3px;
 }
 
 .options li a:hover {
-  background: #eea236;
+  background: #2980B9;
+}
+
+.options li a.active {
+  background-color: #5cb85c;
+}
+
+.options li a:hover:after,
+.options li a.active:after {
+  display: block;
+}
+
+.options li a:after {
+  content: "\e00a";
 }
 
 .play {
@@ -707,6 +747,29 @@ h1 {
   -ms-transform: translateX(0);
   transform: translateX(0);
   opacity: 1;
+}
+
+.selected {
+  display: none;
+  max-width: 320px;
+  margin: 30px auto 0;
+  padding: 20px;
+  background: #E67E22;
+  border-radius: 3px;
+}
+
+.selected h2,
+.selected p {
+  text-align: center;
+  margin: 0;
+}
+
+.selected h2 {
+  margin-bottom: 5px;
+}
+
+.selected p {
+  font-style: italic;
 }
 
 /*# sourceMappingURL=common.css.map */
