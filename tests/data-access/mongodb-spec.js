@@ -1,9 +1,11 @@
 var mongodb = require('../../bin/data_access/mongodb');
+var sortDir = require('../../bin/data_access/sort-direction');
 
 describe("Reading from MongoDB", function(){
 	var NAME = "My Name",
 		EMAIL = "my@email.com",
-		ACCOUNT = {name: NAME, email: EMAIL, date: new Date()},
+		SORT_FIELD = 'timestamp',
+		ACCOUNT = {name: NAME, email: EMAIL, SORT_FIELD: new Date()},
 		value,
 		flag;
 		
@@ -20,17 +22,17 @@ describe("Reading from MongoDB", function(){
 		// When
 		runs(function() {
 			flag = false;
-			mongodb.find("email", EMAIL, function(results) {
-				var result = results[0];
-				name = result.name;
-				email = result.email;
+			mongodb.findLatest(SORT_FIELD, sortDir.DESC, function(doc) {
+				name = doc.name;
+				email = doc.email;
+				console.log(doc[SORT_FIELD]);
 				flag = true;
 			});
 		});
 		
 		waitsFor(function(){
 			return flag;
-		}, 'the correct records should be returned', 200);
+		}, 'the correct records should be returned', 50);
 		
 		// Then
 		runs(function() {
