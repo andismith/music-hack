@@ -605,6 +605,43 @@ h1 {
   border-radius: 3px;
 }
 
+.countdown {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.countdown li {
+  border-radius: 50%;
+  color: white;
+  display: none;
+  font-size: 6em;
+  height: 200px;
+  line-height: 200px;
+  width: 200px;
+  text-align: center;
+}
+
+.countdown li.active {
+  display: block;
+}
+
+.countdown li.count-3 {
+  background: #5c74b8;
+}
+
+.countdown li.count-2 {
+  background: #e2bd63;
+}
+
+.countdown li.count-1 {
+  background: #a52f42;
+}
+
+.countdown li.count-go {
+  background: #5cb85c;
+}
+
 .button {
   display: block;
   max-width: 320px;

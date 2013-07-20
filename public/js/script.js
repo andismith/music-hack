@@ -59,6 +59,24 @@ window.music = window.music || {};
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
+  function countdown(i) {
+    var $countdown = $('.countdown li'),
+      length = $countdown.length;
+
+    if (typeof i === 'undefined') {
+      i = 0;
+    }
+
+    if (i < length) {
+      $countdown.removeClass('active');
+      $countdown.eq(i).addClass('active');
+
+      setTimeout(function() {
+        countdown(++i);
+      }, 500);
+    }
+  }
+
   // Init
   function init() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -69,6 +87,7 @@ window.music = window.music || {};
     //loadSound(SAMPLE_URL);
   }
 
+  samplePlayer.countdown = countdown;
   samplePlayer.init = init;
 
 }(window.music.samplePlayer = window.music.samplePlayer || {}));

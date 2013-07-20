@@ -26,7 +26,14 @@
     <div class="site-wrapper">
       <h1>MusicMatch.io</h1>
 
-      <p class="intro">Select an option from the list below:</p>
+      <p class="intro">Select an option from th-e list below:</p>
+
+      <ul class="countdown">
+        <li class="count-3">3</li>
+        <li class="count-2">2</li>
+        <li class="count-1">1</li>
+        <li class="count-go">Go!</li>
+      </ul>
 
       <ul class="options">
         <li><a href="#">Daft Punk - Get Lucky</a></li>
@@ -38,11 +45,12 @@
       {{#each items}}
         <li>
           <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
-          <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}</li>
+          <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}
+        </li>
       {{/each}}
       </ul>
     </div>
-
+   
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
     <script src="/js/plugins.js"></script>
     <script src="/js/script.js"></script>

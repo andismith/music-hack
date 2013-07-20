@@ -8,7 +8,7 @@
     exports.NokiaMusic = function() {       
         
         function getRandomSong(callback) { 
-            request('http://api.ent.nokia.com/1.x/gb/?products=charts&category=single&domain=music&app_id=_WN7DlNjki_uTKc7kY1A&itemsperpage='+config.AppConfig.Results.count, function (error, response, body) {
+            request('http://api.ent.nokia.com/1.x/gb/mixes/groups/44630457/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A', function (error, response, body) {
                 //var parsedJSON = JSON.parse(body).items;
 
                 callback(body);
