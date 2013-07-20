@@ -60,12 +60,15 @@
 					  for(var i=0;i<arr.length;i++){
 					    if(arr[i]==randomnumber){found=true;break}
 					  }
-					  if(!found)arr[arr.length]=[results[randomnumber].id, results[randomnumber].name];
+					  if(!found){
+					  	arr[arr.length]={'id': results[randomnumber].id, 'name': results[randomnumber].name};
+					  	
+					  }
 				}
 				
-				arr.push([results[randomNumber].id, results[randomNumber].name]);
+				arr.push({'id': results[randomNumber].id, 'name': results[randomNumber].name});
 				arr = randomiseArray(arr);
-				console.log(arr)
+				console.log(pickedSongs, arr)
 				return arr;
 	        }	    
 
