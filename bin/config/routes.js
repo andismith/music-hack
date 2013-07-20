@@ -35,7 +35,7 @@
 					randomId = pickRandomId(parsedResults.tracklist);
 					
 					resultCount = parsedResults.tracklist.length;
-					//randomList(parsedResults.tracklist);
+					console.log(randomList(parsedResults.tracklist));
 
 				res.render('question', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});	
 //{{selected}}
