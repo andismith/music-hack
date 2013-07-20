@@ -1,0 +1,420 @@
+{
+  "items":  [
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Dance",
+          "name": "Dance"
+        }
+      ],
+      "name": "Reload (Vocal Version / Remixes)",
+      "streetreleasedate": "2013-07-05T00:00:00Z",
+      "trackcount": 4,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.69,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/320394379/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/320394379/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/320394379/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/320394379/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Sebastian Ingrosso",
+            "id": "393609"
+          },
+           {
+            "name": "Tommy Trash",
+            "id": "505094"
+          },
+           {
+            "name": "John Martin",
+            "id": "409380"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/47560659/",
+      "id": "47560659",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "SoulRandBFunk",
+          "name": "Soul/R 'n' B/Funk"
+        }
+      ],
+      "name": "Blurred Lines (All Other Partners / UK Version)",
+      "streetreleasedate": "2013-05-24T00:00:00Z",
+      "trackcount": 3,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.69,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/317625596/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/317625596/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/317625596/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/317625596/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Robin Thicke",
+            "id": "473592"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/46203823/",
+      "id": "46203823",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Rock",
+          "name": "Rock"
+        }
+      ],
+      "name": "The Wild",
+      "streetreleasedate": "2013-03-22T00:00:00Z",
+      "trackcount": 4,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.99,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/317575018/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/317575018/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/317575018/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/317575018/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Lewis Watson",
+            "id": "25284665"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/43673591/",
+      "id": "43673591",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Dance",
+          "name": "Dance"
+        }
+      ],
+      "name": "Love Gun EP",
+      "streetreleasedate": "2012-12-16T00:00:00Z",
+      "trackcount": 3,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 2.39,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/299971127/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/299971127/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/299971127/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/299971127/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Mikel Vert",
+            "id": "35663605"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/40173272/",
+      "id": "40173272",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Pop",
+          "name": "Pop"
+        }
+      ],
+      "name": "Love Me Again",
+      "streetreleasedate": "2013-05-17T00:00:00Z",
+      "trackcount": 5,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.99,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/317394859/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/317394859/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/317394859/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/317394859/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "John Newman",
+            "id": "19503722"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/46127599/",
+      "id": "46127599",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Dance",
+          "name": "Dance"
+        }
+      ],
+      "name": "Gun EP",
+      "streetreleasedate": "2013-07-12T00:00:00Z",
+      "trackcount": 5,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.69,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/323525173/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/323525173/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/323525173/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/323525173/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "CHVRCHES",
+            "id": "37401949"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/49070025/",
+      "id": "49070025",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Dance",
+          "name": "Dance"
+        }
+      ],
+      "name": "Progress",
+      "streetreleasedate": "2012-06-11T00:00:00Z",
+      "trackcount": 2,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 1.59,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/247422547/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/247422547/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/247422547/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/247422547/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Oliver Smith",
+            "id": "355814"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/28884985/",
+      "id": "28884985",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "IndieAlternative",
+          "name": "Indie/Alternative"
+        }
+      ],
+      "name": "Blue Collar Jane EP",
+      "streetreleasedate": "2013-03-28T00:00:00Z",
+      "trackcount": 3,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 0.99,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/310621579/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/310621579/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/310621579/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/310621579/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "The Strypes",
+            "id": "14443413"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/43823933/",
+      "id": "43823933",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Rock",
+          "name": "Rock"
+        }
+      ],
+      "name": "A Little Less Conversation",
+      "streetreleasedate": "2002-06-10T00:00:00Z",
+      "trackcount": 3,
+      "variousartists": true,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 4.99,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/142955541/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/142955541/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/142955541/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/142955541/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Elvis Presley",
+            "id": "302483"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/8225333/",
+      "id": "8225333",
+      "type": "musiccollection"
+    },
+     {
+      "category":  {
+        "id": "Single",
+        "name": "Single"
+      },
+      "genres":  [
+         {
+          "id": "Rock",
+          "name": "Rock"
+        }
+      ],
+      "name": "If I Can Dream",
+      "streetreleasedate": "2007-10-22T00:00:00Z",
+      "trackcount": 3,
+      "variousartists": false,
+      "prices":  {
+        "permanentdownload":  {
+          "value": 4.99,
+          "currency": "GBP"
+        }
+      },
+      "thumbnails":  {
+        "50x50": "http://4.musicimg.ovi.com/u/1.0/image/150678193/?w=50&q=40",
+        "100x100": "http://4.musicimg.ovi.com/u/1.0/image/150678193/?w=100&q=70",
+        "200x200": "http://4.musicimg.ovi.com/u/1.0/image/150678193/?w=200&q=90",
+        "320x320": "http://4.musicimg.ovi.com/u/1.0/image/150678193/?w=320&q=90"
+      },
+      "creators":  {
+        "performers":  [
+           {
+            "name": "Elvis Presley",
+            "id": "302483"
+          }
+        ]
+      },
+      "storeuri": "http://music.nokia.com/gb/r/product/-/-/9686814/",
+      "id": "9686814",
+      "type": "musiccollection"
+    }
+  ],
+  "facets":  [
+     {
+      "field": "category",
+      "values":  [
+         {
+          "id": "Single",
+          "name": "Single",
+          "count": 358971
+        }
+      ]
+    }
+  ],
+  "paging":  {
+    "total": 358971,
+    "startindex": 0,
+    "itemsperpage": 10
+  },
+  "type": "itemlist"
+}
