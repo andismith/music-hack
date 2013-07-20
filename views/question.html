@@ -36,9 +36,9 @@
       </ul>
 
       <ul class="options">
-        <li><a href="#" data-icon="check">Daft Punk - Get Lucky</a></li>
-        <li><a href="#" data-icon="check">James Blake - CMYK</a></li>
-        <li><a href="#" data-icon="check">Trifonic - Ninth Wave</a></li>
+        {{#each results}}
+        <li><a href="#" data-icon="check">{{ this }}</a></li>
+        {{/each}}
       </ul>
 
       <div class="selected">
@@ -47,7 +47,7 @@
       </div>
 
       <ul style="display: none;">
-      {{#each items}}
+      {{#each results}}
         <li>
           <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
           <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}
