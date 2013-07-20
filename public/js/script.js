@@ -38,22 +38,6 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
-  // Handle Animation
-  function handleAnimation(el, delay) {
-    setTimeout(function(){
-      $(el).addClass('play');
-    }, 20);
-
-    if (delay === true) {
-      delay = 50;
-
-      $(el).each(function(){
-        delay += 350;
-        $(this).css('transition-delay', delay + 'ms');
-      });
-    }
-  }
-
   // Select an answer
   function selectAnswer() {
     var $item = $('.options').find('a'),
@@ -82,7 +66,7 @@ window.music = window.music || {};
     context = new AudioContext();
 
     initPlugins();
-    handleAnimation('.options li', true);
+    selectAnswer();
     //loadSound(SAMPLE_URL);
   }
 
@@ -92,8 +76,39 @@ window.music = window.music || {};
 
 window.music.samplePlayer.init();
 
+(function(animation, $) {
+
+  // Handle Animation
+  function handleAnimation(el, delay) {
+    setTimeout(function(){
+      $(el).addClass('play');
+    }, 20);
+
+    if (delay === true) {
+      delay = 50;
+
+      $(el).each(function(){
+        delay += 350;
+        $(this).css('transition-delay', delay + 'ms');
+      });
+    }
+  }
+
+  animation.handleAnimation = handleAnimation;
+
+})(window.music.animation = window.music.animation || {}, jQuery);
+
 (function(question, $) {
 
+  var $container = $('.container'),
+      $goButton = $('.go'),
+      $songSample = $('#song-sample');
+
+  function showQuestion() {
+    $container.addClass('ready');
+    window.music.animation.handleAnimation('.options li', true);
+    $songSample.get(0).play();
+  }
   function countdown(i) {
     var $countdown = $('.countdown li'),
       length = $countdown.length;
@@ -101,7 +116,8 @@ window.music.samplePlayer.init();
     if (typeof i === 'undefined') {
       i = 0;
     }
-    console.log(i);
+
+    console.log(i, length);
 
     if (i < length) {
       $countdown.removeClass('active');
@@ -113,14 +129,16 @@ window.music.samplePlayer.init();
     }
   }
 
-  function init() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    context = new AudioContext();
+  function initEvents() {
+    console.log('init events');
+    $goButton.on('click', showQuestion);
+    $songSample.on('loadeddata', function() {
+      countdown(0);
+    });
+  }
 
-    initPlugins();
-    selectAnswer();
-    handleAnimation('.options li', true);
-    //loadSound(SAMPLE_URL);
+  function init() {
+    initEvents();
   }
 
   question.init = init;
@@ -143,3 +161,6 @@ window.music.samplePlayer.init();
   music.init = init;
 
 })(window.music = window.music || {}, jQuery);
+
+
+window.music.init();
