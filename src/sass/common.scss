@@ -1,2 +1,27 @@
 @import "libs/_normalize-1.1.2";
 @import "_vars";
+
+
+
+body {
+    background: $background-color;
+    color: $text-color;
+    margin: 20px;
+}
+
+a {
+    text-decoration: none;
+    
+    &:hover {
+        
+    }
+}
+
+.button {
+    background: green;
+    border-radius: 8px;
+    color: white;
+    display: block;
+    padding: 10px;
+    text-align: center;
+}

@@ -552,4 +552,23 @@ table {
   border-spacing: 0;
 }
 
+body {
+  background: white;
+  color: black;
+  margin: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.button {
+  background: green;
+  border-radius: 8px;
+  color: white;
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+
 /*# sourceMappingURL=common.css.map */
