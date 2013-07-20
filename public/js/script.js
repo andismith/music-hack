@@ -145,6 +145,16 @@ window.music.samplePlayer.init();
 
 }(window.music.question = window.music.question || {}, jQuery));
 
+(function(answer, $) {
+
+  function init() {
+
+  }
+
+  answer.init = init;
+
+})(window.music.answer = window.music.answer || {}, jQuery);
+
 (function(music, $) {
 
   var $body = $('body');
