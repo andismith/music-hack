@@ -604,7 +604,9 @@ h1 {
 }
 
 h2 {
+  text-align: center;
   font-weight: lighter;
+  margin: 40px auto 20px;
 }
 
 .intro {
@@ -736,8 +738,8 @@ h2 {
 }
 
 .play {
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
@@ -749,27 +751,25 @@ h2 {
   opacity: 1;
 }
 
-.selected {
-  display: none;
+.timer {
+  width: 100%;
   max-width: 320px;
-  margin: 30px auto 0;
-  padding: 20px;
-  background: #E67E22;
-  border-radius: 3px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
 }
 
-.selected h2,
-.selected p {
-  text-align: center;
-  margin: 0;
+.timer span {
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #5cb85c;
+  border-radius: 5px;
+  -webkit-transition: all 10s ease;
+  transition: all 10s ease;
 }
 
-.selected h2 {
-  margin-bottom: 5px;
-}
-
-.selected p {
-  font-style: italic;
+.timer.start span {
+  width: 0;
 }
 
 /*# sourceMappingURL=common.css.map */

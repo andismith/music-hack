@@ -66,7 +66,24 @@ window.music = window.music || {};
       $(this).addClass('active');
 
       $selectedPrompt.show().find('p').html($(this).text());
+
+      startTimer();
     });
+  }
+
+  // Start the timer
+  function startTimer() {
+    var $timer = $('.timer');
+
+    $timer.addClass('start');
+
+    setTimeout(function(){
+      $timer.find('span').css('background-color', '#F39C12');
+    }, 1000);
+
+    setTimeout(function(){
+      $timer.find('span').css('background-color', '#E74C3C');
+    }, 2000);
   }
 
   // Init any included plugins
