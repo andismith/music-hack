@@ -84,7 +84,7 @@ module.exports = function (grunt) {
           src: ['**/*.scss', '!**/_*.scss'],
           cwd: 'public/sass',
           dest: 'public/css',
-          ext: '.min.css'
+          ext: '.css'
         }]
       }
     },

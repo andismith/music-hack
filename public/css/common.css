@@ -610,17 +610,66 @@ h1 {
   max-width: 320px;
   width: 100%;
   text-align: center;
+  font-family: inherit;
   font-size: 40px;
   color: inherit;
   text-decoration: none;
   margin: 15px auto 0;
   padding: 10px;
+  border: none;
+  outline: none;
   border-radius: 3px;
   background: #5cb85c;
 }
 
 .button:hover {
   background: #50b350;
+}
+
+.options {
+  margin: 0;
+  padding: 0;
+}
+
+.options li {
+  list-style: none;
+  opacity: 0;
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.options li a {
+  display: block;
+  list-style: none;
+  margin: 10px auto;
+  padding: 15px;
+  max-width: 320px;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  text-align: center;
+  background: #f0ad4e;
+  border-radius: 3px;
+}
+
+.options li a:hover {
+  background: #eea236;
+}
+
+.play {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.options li.play {
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  opacity: 1;
 }
 
 /*# sourceMappingURL=common.css.map */

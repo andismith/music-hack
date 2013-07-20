@@ -24,21 +24,27 @@
   <body>
 
     <div class="site-wrapper">
+      <h1>MusicMatch.io</h1>
 
-      <h1>Question</h1>
+      <p class="intro">Select an option from the list below:</p>
 
-      <ul>
-    {{#each items}}
+      <ul class="options">
+        <li><a href="#">Daft Punk - Get Lucky</a></li>
+        <li><a href="#">James Blake - CMYK</a></li>
+        <li><a href="#">Trifonic - Ninth Wave</a></li>
+      </ul>
+
+      <ul style="display: none;">
+      {{#each items}}
         <li>
           <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
           <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}</li>
       {{/each}}
-    </ul>
-
-      <input type="text" class="name" />
-
-      <a href="" class="button">Play</a>
-
+      </ul>
     </div>
+
+    <script src="/js/libs/jquery-1.10.2.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/script.js"></script>
   </body>
 </html>

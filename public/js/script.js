@@ -38,19 +38,25 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
-  // Start the game
-  function startGame() {
+  // Handle Animation
+  function handleAnimation(el, delay) {
+    setTimeout(function(){
+      $(el).addClass('play');
+    }, 20);
 
-  }
+    if (delay === true) {
+      delay = 50;
 
-  // Init events
-  function initEvents() {
-
+      $(el).each(function(){
+        delay += 350;
+        $(this).css('transition-delay', delay + 'ms');
+      });
+    }
   }
 
   // Init any included plugins
   function initPlugins() {
-    $('h1').fitText();
+    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
   // Init
@@ -58,7 +64,8 @@ window.music = window.music || {};
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
 
-    //initPlugins();
+    initPlugins();
+    handleAnimation('.options li', true);
     //loadSound(SAMPLE_URL);
   }
 

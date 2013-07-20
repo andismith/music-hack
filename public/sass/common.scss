@@ -32,7 +32,7 @@ h1 {
     text-align: center;
     font-size: 14px;
 
-    @media only screen and (min-width : 640px) {
+    @media only screen and (min-width: 640px) {
         font-size: 18px;
     }  
 }
@@ -55,15 +55,58 @@ h1 {
     max-width: 320px;
     width: 100%;
     text-align: center;
+    font-family: inherit;
     font-size: 40px;
     color: inherit;
     text-decoration: none;
     margin: 15px auto 0;
     padding: 10px;
+    border: none;
+    outline: none;
     border-radius: 3px;
     background: #5cb85c;
 
     &:hover {
         background: #50b350;
     }
+}
+
+.options {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none;
+        opacity: 0;
+        transform: translateX(-100%);
+
+        a {
+            display: block;
+            list-style: none;
+            margin: 10px auto;
+            padding: 15px;
+            max-width: 320px;
+            width: 100%;
+            color: inherit;
+            text-decoration: none;
+            outline: none;
+            text-align: center;
+            background: #f0ad4e;
+            border-radius: 3px;
+
+            &:hover {
+                background: #eea236;
+            }
+        }
+    }
+}
+
+.play {
+    transition: all 0.3s ease; 
+    animation-fill-mode: both;
+}
+
+.options li.play {
+    transform: translateX(0);
+    opacity: 1;
 }

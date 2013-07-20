@@ -19,7 +19,7 @@
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="stylesheet" href="/css/common.css" />
    
-    <script src="../js/libs/modernizr-2.6.2.js"></script>
+    <script src="/js/libs/modernizr-2.6.2.js"></script>
   </head>
   <body>
 
@@ -36,13 +36,14 @@
         <p>Enter your name in the field below and click Play to begin!</p>
       </div>
 
-      <input type="text" class="name" placeholder="Enter your name..." />
-
-      <a href="/play" class="button">Play</a>
+      <form action="/play">
+        <input type="text" class="name" placeholder="Enter your name..." required />
+        <input type="submit" href="/play" class="button" value="Play" />
+      </form>
     </div>
 
-    <script src="../js/libs/jquery-1.10.2.min.js"></script>
-    <script src="../js/plugins.js"></script>
-    <script src="../js/script.js"></script>
+    <script src="/js/libs/jquery-1.10.2.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/script.js"></script>
   </body>
 </html>
