@@ -58,8 +58,6 @@ window.music = window.music || {};
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
-
-
   // Init
   function init() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -99,15 +97,30 @@ window.music.samplePlayer.init();
 })(window.music.animation = window.music.animation || {}, jQuery);
 
 (function(question, $) {
-
   var $container = $('.container'),
       $goButton = $('.go'),
       $songSample = $('#song-sample');
+
+  // Start the timer
+  function startTimer() {
+    var $timer = $('.timer');
+
+    $timer.addClass('start');
+
+    setTimeout(function(){
+      $timer.find('span').css('background-color', '#F39C12');
+    }, 1000);
+
+    setTimeout(function(){
+      $timer.find('span').css('background-color', '#E74C3C');
+    }, 2000);
+  }
 
   function showQuestion() {
     $container.addClass('ready');
     window.music.animation.handleAnimation('.options li', true);
     $songSample.get(0).play();
+    startTimer();
   }
   function countdown(i) {
     var $countdown = $('.countdown li'),
@@ -126,15 +139,21 @@ window.music.samplePlayer.init();
       setTimeout(function() {
         countdown(++i);
       }, 500);
+    } else {
+      showQuestion();
     }
+  }
+
+  function loadAudio() {
+    $songSample.get(0).load();
+    $songSample.on('loadeddata', function() {
+      countdown(0);
+    });
   }
 
   function initEvents() {
     console.log('init events');
-    $goButton.on('click', showQuestion);
-    $songSample.on('loadeddata', function() {
-      countdown(0);
-    });
+    $goButton.on('click', loadAudio);
   }
 
   function init() {
@@ -166,6 +185,7 @@ window.music.samplePlayer.init();
       window.music[pageId].init();
     }
 
+    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
   music.init = init;
