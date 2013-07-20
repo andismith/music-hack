@@ -40,16 +40,12 @@ window.music = window.music || {};
 
   // Start the game
   function startGame() {
-    
+
   }
 
   // Init events
   function initEvents() {
-    var $play = $("#play");
 
-    $play.on('click', function(e) {
-      e.preventDefault();
-    });
   }
 
   // Init any included plugins
