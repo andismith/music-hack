@@ -37,7 +37,7 @@
 				var	randomId = pickRandomId(parsedResults.tracklist);
 					
 
-				res.render('question', {'selected': randomId, 'results': randomList(parsedResults.tracklist, randomId)});	
+				res.render('question', {'selected': randomId, 'results': randomList(parsedResults.tracklist)});	
 
             });
 
@@ -50,10 +50,10 @@
             	return results[randomNumber].id;
 	        }
 
-	        function randomList(results, selected) {
-	        	
+	        function randomList(results) {        	
 
-	        	var arr = [];
+	        	var arr = [],
+	        		pickedSongs = {};
 				while(arr.length < config.AppConfig.Results.count){
 					var randomnumber=Math.ceil(Math.random()*resultCount)
 					  var found=false;
@@ -63,8 +63,9 @@
 					  if(!found)arr[arr.length]=[results[randomnumber].id, results[randomnumber].name];
 				}
 				
-				arr.push([results[randomNumber].id, results[randomNumber].name])
+				arr.push([results[randomNumber].id, results[randomNumber].name]);
 				arr = randomiseArray(arr);
+				console.log(arr)
 				return arr;
 	        }	    
 
