@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "base"
+
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "../my-recipes/cookbooks"
+    chef.roles_path = "../my-recipes/roles"
+    chef.data_bags_path = "../my-recipes/data_bags"
+    chef.add_recipe "mongodb"
+  end
+
+end
