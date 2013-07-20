@@ -11,24 +11,33 @@ module.exports = (function(){
 		}
 	}
 	
+	function safeCallback(callback) {
+		if (callback) {
+			callback();
+		}
+		else {
+			console.log('No callback function provided.');
+		}
+	}
+	
 	function insert(doc){
 		client.connect(conn_string, function(err, db) {
-			if (err) throw err;
+			handleError(err);
 			db.collection(collection).insert(JSON.parse(doc), function() {
 				db.close();
 			});
 		});
 	};
 	
-	function findLatest(callback){
+	function findLatest(sortField, sortDir, callback){
 		client.connect(conn_string, function(err, db) {
 			handleError(err);
-			db.collection(collection).find().sort({timestamp: -1}).limit(1).nextObject(function(err, doc) {
+			db.collection(collection).find().sort([[sortField, sortDir]]).limit(1).nextObject(function(err, doc) {
 				handleError(err);
 				db.close();
-				if (callback) {
+				safeCallback(function() {
 					callback(doc);
-				}
+				});
 			});
 		});
 	};
