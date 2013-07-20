@@ -633,6 +633,24 @@ h2 {
   border-radius: 3px;
 }
 
+/* questions */
+
+.loading {
+  display: block;
+}
+
+.question {
+  display: none;
+}
+
+.ready .loading {
+  display: none;
+}
+
+.ready .question {
+  display: block;
+}
+
 .countdown {
   list-style-type: none;
   margin: 0;

@@ -38,6 +38,44 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
+  // Select an answer
+  function selectAnswer() {
+    var $item = $('.options').find('a'),
+        $selectedPrompt = $('.selected');
+
+    $item.on('click', function(e) {
+      e.preventDefault();
+
+      $item.removeClass('active');
+      $(this).addClass('active');
+
+      $selectedPrompt.show().find('p').html($(this).text());
+    });
+  }
+
+  // Init any included plugins
+  function initPlugins() {
+    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
+  }
+
+  // Init
+  function init() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    context = new AudioContext();
+
+    initPlugins();
+    selectAnswer();
+    //loadSound(SAMPLE_URL);
+  }
+
+  samplePlayer.init = init;
+
+}(window.music.samplePlayer = window.music.samplePlayer || {}));
+
+window.music.samplePlayer.init();
+
+(function(animation, $) {
+
   // Handle Animation
   function handleAnimation(el, delay) {
     setTimeout(function(){
@@ -54,22 +92,14 @@ window.music = window.music || {};
     }
   }
 
-  // Select an answer
-  function selectAnswer() {
-    var $item = $('.options').find('a'),
-        $selectedPrompt = $('.selected');
+  animation.handleAnimation = handleAnimation;
 
-    $item.on('click', function(e) {
-      e.preventDefault();
+})(window.music.animation = window.music.animation || {}, jQuery);
 
-      $item.removeClass('active');
-      $(this).addClass('active');
-
-      $selectedPrompt.show().find('p').html($(this).text());
-
-      startTimer();
-    });
-  }
+(function(question, $) {
+  var $container = $('.container'),
+      $goButton = $('.go'),
+      $songSample = $('#song-sample');
 
   // Start the timer
   function startTimer() {
@@ -86,11 +116,12 @@ window.music = window.music || {};
     }, 2000);
   }
 
-  // Init any included plugins
-  function initPlugins() {
-    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
+  function showQuestion() {
+    $container.addClass('ready');
+    window.music.animation.handleAnimation('.options li', true);
+    $songSample.get(0).play();
+    startTimer();
   }
-
   function countdown(i) {
     var $countdown = $('.countdown li'),
       length = $countdown.length;
@@ -99,6 +130,8 @@ window.music = window.music || {};
       i = 0;
     }
 
+    console.log(i, length);
+
     if (i < length) {
       $countdown.removeClass('active');
       $countdown.eq(i).addClass('active');
@@ -106,23 +139,58 @@ window.music = window.music || {};
       setTimeout(function() {
         countdown(++i);
       }, 500);
+    } else {
+      showQuestion();
     }
   }
 
-  // Init
-  function init() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    context = new AudioContext();
-
-    initPlugins();
-    selectAnswer();
-    handleAnimation('.options li', true);
-    //loadSound(SAMPLE_URL);
+  function loadAudio() {
+    $songSample.get(0).load();
+    $songSample.on('loadeddata', function() {
+      countdown(0);
+    });
   }
 
-  samplePlayer.countdown = countdown;
-  samplePlayer.init = init;
+  function initEvents() {
+    console.log('init events');
+    $goButton.on('click', loadAudio);
+  }
 
-}(window.music.samplePlayer = window.music.samplePlayer || {}));
+  function init() {
+    initEvents();
+  }
 
-window.music.samplePlayer.init();
+  question.init = init;
+
+}(window.music.question = window.music.question || {}, jQuery));
+
+(function(answer, $) {
+
+  function init() {
+
+  }
+
+  answer.init = init;
+
+})(window.music.answer = window.music.answer || {}, jQuery);
+
+(function(music, $) {
+
+  var $body = $('body');
+
+  function init() {
+    var pageId = $body.data('page-id');
+
+    if (pageId !== undefined && window.music[pageId]) {
+      window.music[pageId].init();
+    }
+
+    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
+  }
+
+  music.init = init;
+
+})(window.music = window.music || {}, jQuery);
+
+
+window.music.init();

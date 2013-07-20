@@ -21,38 +21,43 @@
    
     <script src="/js/libs/modernizr-2.6.2.js"></script>
   </head>
-  <body>
+  <body data-page-id="question">
 
     <div class="container">
       <h1>MusicMatch.io</h1>
 
-      <p class="intro">Select an option from the list below:</p>
+      <audio id="song-sample" src="http://api.ent.nokia.com/1.x/gb/products/{{selected}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio>
 
-      <ul class="countdown">
-        <li class="count-3">3</li>
-        <li class="count-2">2</li>
-        <li class="count-1">1</li>
-        <li class="count-go">Go!</li>
-      </ul>
+      <section class="get-ready">
+        <a href="#" class="go button">Go</a>
+      </section>
 
-      <ul class="options">
-        {{#each results}}
-        <li><a href="#" data-icon="check">{{ this }}</a></li>
-        {{/each}}
-      </ul>
+      <section class="loading">
+
+        <p class="intro">Select an option from the list below:</p>
+
+        <ul class="countdown">
+          <li class="loading active">Loading</li>
+          <li class="count-3">3</li>
+          <li class="count-2">2</li>
+          <li class="count-1">1</li>
+        </ul>
+      </section>
+
+      <section class="question">
+
+        <ul class="options">
+          {{#each results}}
+          <li><a href="#" data-icon="check">{{ this }}</a></li>
+          {{/each}}
+        </ul>
+
+      </section>
 
       <h2>Time Remaining:</h2>
 
       <p class="timer"><span></span></p>
 
-      <ul style="display: none;">
-      {{#each results}}
-        <li>
-          <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
-          <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}
-        </li>
-      {{/each}}
-      </ul>
     </div>
    
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
