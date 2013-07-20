@@ -8,15 +8,13 @@
 
 		new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
-		console.log("get songs");
-
 		function songsRetrieved(songs) {
-			songsSearchResults = JSON.parse(songs);
+			songsSearchResults = songs;
 		}
 
 		module.exports = function(app) {
 			app.get('/', function (req, res){ 
-				res.render('index', songsSearchResults);			
+				res.render('index', JSON.parse(songsSearchResults));			
 			});
             app.get('/web-audio-test', function (req, res){
                 res.header('Access-Control-Allow-Origin', '*');

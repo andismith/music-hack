@@ -27,14 +27,17 @@
 
       <h1>Name</h1>
 
-      <p>Hello World</p>
+      <a href="#" onclick="document.getElementById('song').play();">PLAY!</a>
+
+<audio id="song" src="http://api.ent.nokia.com/1.x/gb/products/47560659/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio>
 
       <ul>
-        <li>Some info</li>
-        <li>Some info</li>
-        <li>Some info</li>
-        <li>Some info</li>
-      </ul>
+    {{#each items}}
+        <li>
+          <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
+          <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}</li>
+      {{/each}}
+    </ul>
 
       <input type="text" class="name" />
 
