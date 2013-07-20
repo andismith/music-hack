@@ -23,7 +23,7 @@ module.exports = (function(){
 	function findLatest(callback){
 		client.connect(conn_string, function(err, db) {
 			handleError(err);
-			db.collection(collection).find().sort({timestamp: -1}).limit(1).skip(0).nextObject(function(err, doc) {
+			db.collection(collection).find().sort({timestamp: -1}).limit(1).nextObject(function(err, doc) {
 				handleError(err);
 				db.close();
 				if (callback) {
