@@ -18,5 +18,9 @@
 			app.get('/', function (req, res){ 
 				res.render('index', songsSearchResults);			
 			});
+            app.get('/web-audio-test', function (req, res){
+                res.header('Access-Control-Allow-Origin', '*');
+                res.render('web-audio-test', res);           
+            });
 		};
 }());

@@ -24,7 +24,7 @@
 			app.set('view engine', 'html');
 			app.set("view options", { layout: true });
 			app.engine('.html', engines.handlebars);
-			app.use(express.static(path.join(__dirname, 'public')));
+			app.use(express.static(path.join(__dirname, '/public')));
 			app.use(app.router);
 		});
 
