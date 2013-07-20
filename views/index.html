@@ -36,6 +36,19 @@
         <p>Enter your name in the field below and click Play to begin!</p>
       </div>
 
+      <a href="#" onclick="document.getElementById('song').play();">PLAY!</a>
+
+      <audio id="song" src="http://api.ent.nokia.com/1.x/gb/products/47560659/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio>
+
+      <ul>
+      {{#each items}}
+        <li>
+          <a href="#" onclick="document.getElementById('song-{{id}}').play();">PLAY!</a>
+          <audio id="song-{{id}}" src="http://api.ent.nokia.com/1.x/gb/products/{{id}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio> - {{name}}
+        </li>
+      {{/each}}
+      </ul>
+
       <input type="text" class="name" placeholder="Enter your name..." />
 
       <a href="#" class="button">Play</a>

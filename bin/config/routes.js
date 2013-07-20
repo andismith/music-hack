@@ -3,10 +3,18 @@
 /*global require:false, process:false, console:false, __dirname:false, exports:false */
 (function () {
     "use strict";
+	var nokiaAPI = require('../nokia-api/stream'),
+		songsSearchResults;
+
+		new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
+
+		function songsRetrieved(songs) {
+			songsSearchResults = songs;
+		}
 
 		module.exports = function(app) {
 			app.get('/', function (req, res){ 
-				res.render('index', res);			
+				res.render('index', JSON.parse(songsSearchResults));			
 			});
             app.get('/web-audio-test', function (req, res){
                 res.header('Access-Control-Allow-Origin', '*');

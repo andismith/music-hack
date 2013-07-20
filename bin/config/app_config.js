@@ -4,6 +4,9 @@ exports.AppConfig = {
     NokiaAPI: {
         app_id: '_WN7DlNjki_uTKc7kY1A'
     },
+    Results: {
+        count: 5
+    },
     Templates: {
         path: __dirname + '/../templates/',
         template: 'template-email.html'
