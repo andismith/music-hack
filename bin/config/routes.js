@@ -36,8 +36,7 @@
             res.send(result);
         });
 
-        app.get('/getAnswer/:id', function(req, res) {      	
-        	
+        app.get('/getAnswer/:id', function(req, res) { 
         	if(typeof selectedTrackResult === 'undefined') {
         		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
         		
@@ -74,9 +73,9 @@
             return results[randomNumber].id;
         }
 
-        function correctSongDetails(track) {
+        function correctSongDetails(id, track) {
         	if(typeof track === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        		new nokiaAPI.NokiaMusic().getSongDetails(id, correctSongDetails);
         	} else {
 	        	selectedTrack = track;
 	        	var parsedResult = JSON.parse(selectedTrack),
