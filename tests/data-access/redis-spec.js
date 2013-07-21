@@ -1,29 +1,22 @@
 var redis = require('../../bin/data_access/redis');
 
-/*
 describe("Writing to Redis", function(){
-	var SCREEN_NAME = "My Name",
-		SCORE = 123456,
-		TIMESTAMP = 'timestamp',
-		client,
-		flag;
-		
-	beforeEach(function(){
-		client = redis.createClient;
-	});
 
-	it("should read database", function() {
+	it("should add a score for a new user", function() {
 		// Given
-		var name, 
-			email;
+		var now = new Date(),
+			username = "un_"+now,
+			scoreToAdd = 123456,
+			highScore;
 
 		// When
 		runs(function() {
 			flag = false;
-			mongodb.findLatest(SORT_FIELD, sortDir.DESC, function(doc) {
-				name = doc.name;
-				email = doc.email;
-				flag = true;
+			redis.addScore(username, scoreToAdd, function() {
+				highScore = redis.findScore(username, function(score) {
+					highScore = score;
+					flag = true;
+				});
 			});
 		});
 		
@@ -33,9 +26,8 @@ describe("Writing to Redis", function(){
 		
 		// Then
 		runs(function() {
-			expect(name).toMatch(NAME);
-			expect(email).toMatch(EMAIL);
+			expect(highScore).toMatch(scoreToAdd);
 	    });
 	});
+
 });
-*/
