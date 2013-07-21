@@ -70,6 +70,7 @@ window.music = window.music || {};
 
   rounds.updateRound = updateRound;
   rounds.getRound = getRound;
+  rounds.getTotalRound = getTotalRound;
   rounds.incrementRound = incrementRound;
   rounds.setRound = setRound;
 
@@ -199,14 +200,14 @@ window.music = window.music || {};
 
     window.music.rounds.incrementRound();
 
-    if (window.music.rounds.getRound() > window.music.rounds.totalRounds()) {
-      window.music.rounds.setRound(0);
-      window.music.pages.navigateTo('leaderboard');
-    } else {
-      setTimeout(function() {
-        window.music.pages.navigateTo('loading');
-      }, 4000);
-    }
+    setTimeout(function() {
+      if (window.music.rounds.getRound() > window.music.rounds.getTotalRound()) {
+        window.music.rounds.setRound(0);
+        window.music.pages.navigateTo('leaderboard');
+      } else {
+          window.music.pages.navigateTo('loading');
+      }
+    }, 4000);
 
   }
 
