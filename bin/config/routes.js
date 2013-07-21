@@ -33,6 +33,7 @@
                     selected: selected,
                     results: tracks
                 };
+            console.log(selected);
 
             res.send(result);
         });

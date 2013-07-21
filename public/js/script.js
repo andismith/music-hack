@@ -132,7 +132,7 @@ window.music = window.music || {};
   }
 
   function endQuestion() {
-    var $selected = $('.answer-options').find('.selected');
+    var $selected = $('.answer-options').find('.selected a');
 
     $songSample.get(0).pause();
 
@@ -210,7 +210,6 @@ window.music = window.music || {};
   function getAnswer(id) {
     $.ajax('/getAnswer/' + id)
     .done(function(data) {
-      debugger;
       var $answer = $('.answer');
       $answer.find('.song').html(data.name);
       $answer.find('.artist').html(data.from);
