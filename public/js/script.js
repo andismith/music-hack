@@ -220,6 +220,8 @@ window.music = window.music || {};
   }
 
   function activate() {
+    var $score = $('.intro .score');
+
     if (!initComplete) {
       init();
     }
@@ -227,6 +229,8 @@ window.music = window.music || {};
     $('.answer').hide();
 
     getAnswer(window.music.getAnswer().id);
+    
+    $score.text(window.music.score.getTotal());
 
     window.music.rounds.incrementRound();
 
