@@ -152,7 +152,7 @@ window.music = window.music || {};
   function showQuestion() {
     window.music.animation.handleAnimation('.answer-options li', true);
     $songSample.get(0).play();
-    $('.answer-options').find('li').last().on('transitionend', function(){
+    $('.answer-options').find('li').last().one('transitionend', function(){
       startTimer();
     });
   }
@@ -198,10 +198,17 @@ window.music = window.music || {};
       init();
     }
 
-    setTimeout(function() {
-      window.music.rounds.incrementRound();
-      window.music.pages.navigateTo('loading');
-    }, 4000);
+    window.music.rounds.incrementRound();
+
+    if (window.music.rounds.getRound() > window.music.rounds.totalRounds()) {
+      window.music.rounds.setRound(0);
+      window.music.pages.navigateTo('leaderboard');
+    } else {
+      setTimeout(function() {
+        window.music.pages.navigateTo('loading');
+      }, 4000);
+    }
+
   }
 
   function init() {
