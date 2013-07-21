@@ -1,29 +1,15 @@
 module.exports = (function(){
 	var client = require('mongodb').MongoClient,
 		format = require('util').format,
+		util = require('./dbutil'),
 		config = require('../config/app_config'),
 		conn_string = config.AppConfig.MongoDB.conn_string,
 		collection = config.AppConfig.MongoDB.collection,
 		mongodb;
 
-	function handleError(err) {
-		if (err) {
-			throw err;
-		}
-	}
-	
-	function safeCallback(callback) {
-		if (callback) {
-			callback();
-		}
-		else {
-			console.log('No callback function provided.');
-		}
-	}
-	
 	function insert(doc){
 		client.connect(conn_string, function(err, db) {
-			handleError(err);
+			util.handleError(err);
 			db.collection(collection).insert(JSON.parse(doc), function() {
 				db.close();
 			});
@@ -32,21 +18,19 @@ module.exports = (function(){
 	
 	function findLatest(sortField, sortDir, callback){
 		client.connect(conn_string, function(err, db) {
-			handleError(err);
+			util.handleError(err);
 			db.collection(collection).find().sort([[sortField, sortDir]]).limit(1).nextObject(function(err, doc) {
-				handleError(err);
+				util.handleError(err);
 				db.close();
-				safeCallback(function() {
+				util.safeCallback(function() {
 					callback(doc);
 				});
 			});
 		});
 	};
 	
-	mongodb = {
+	return {
 		insert: insert,
 		findLatest: findLatest
 	};
-	
-	return mongodb;
 }());
