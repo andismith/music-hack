@@ -18,6 +18,8 @@
 
     module.exports = function(app) {
 
+    	var selectedTrackResultTest;
+
         app.get('/', function(req, res) {
             res.render('index');
         });
@@ -34,21 +36,14 @@
             res.send(result);
         });
 
-        app.get('/getAnswer/:id', function(req, res) {
-        	new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        app.get('/getAnswer/:id', function(req, res) {      	
         	
-        	
-
-	        	console.log("name", selectedTrackResult)
-            // var parsedResults = JSON.parse(songsSearchResults),
-            //     tracks = selectRandomTracks(parsedResults.tracklist),
-            //     selected = getSelectedTrackId(tracks),
-            //     result = {
-            //         selected: selected,
-            //         results: tracks
-            //     };
-
-            // res.send(result);
+        	if(typeof selectedTrackResult === 'undefined') {
+        		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        		
+        	} else {
+        		res.send(selectedTrackResult);
+        	}
         });
 
         app.get('/web-audio-test', function (req, res) {
@@ -80,15 +75,19 @@
         }
 
         function correctSongDetails(track) {
-        	selectedTrack = track;
-        	var parsedResult = JSON.parse(selectedTrack),
-        		result = {
-        			name: parsedResult['name'],
-        			from: parsedResult['takenfrom']['name'],
-        			image: parsedResult['thumbnails']['100x100']
-        		};
+        	if(typeof track === 'undefined') {
+        		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        	} else {
+	        	selectedTrack = track;
+	        	var parsedResult = JSON.parse(selectedTrack),
+	        		result = {
+	        			name: parsedResult['name'],
+	        			from: parsedResult['takenfrom']['name'],
+	        			image: parsedResult['thumbnails']['100x100']
+	        		};
 
-        	selectedTrackResult = result;
+	        	selectedTrackResult = result;
+	        }
         }
 
         function selectRandomTracks(tracks) {

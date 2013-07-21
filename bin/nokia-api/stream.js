@@ -3,6 +3,7 @@
 (function () {
     "use strict";
     var config = require('../config/app_config'),
+        route = require('../config/routes'),
         request = require('request');
 
     exports.NokiaMusic = function() {       
@@ -18,6 +19,7 @@
         function getSongDetails(id, callback) {
             request('http://api.ent.nokia.com/1.x/gb/products/'+id+'/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A', function (error, response, body) {
                 //var parsedJSON = JSON.parse(body).items;
+                //route.selectedTrackResultTest = body;
                 callback(body);
             });
         }
