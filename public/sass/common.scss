@@ -54,7 +54,11 @@ body {
 }
 
 header {
-    border-bottom: solid 1px #333;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+footer {
+    border-top: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 h1 {
@@ -177,7 +181,7 @@ h2 {
 }
 
 .answer-options {
-    margin: 0;
+    margin: 40px auto 0;
     padding: 0;
 
     li {
@@ -314,6 +318,7 @@ h2 {
     border-spacing: 0;
     width: 100%;
     max-width: 320px;
+    margin: 0 auto;
 
     tbody tr:nth-child(odd) {
         background: rgba(125,125,125,0.1);
@@ -333,7 +338,6 @@ h2 {
 }
 
 .score-board {
-    border-top: solid 1px #333;
     list-style-type: none;
     margin: 20px 0 0;
     overflow: hidden;

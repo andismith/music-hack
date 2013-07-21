@@ -5,7 +5,9 @@
 
     var nokiaAPI = require('../nokia-api/stream'),
         config = require('../config/app_config'),
-        songsSearchResults;
+        songsSearchResults,
+        selectedTrack,
+        selectedTrackResult;
 
     new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
@@ -31,6 +33,23 @@
             res.send(result);
         });
 
+        app.get('/getAnswer/:id', function(req, res) {
+        	new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        	
+        	
+
+	        	console.log("name", selectedTrackResult)
+            // var parsedResults = JSON.parse(songsSearchResults),
+            //     tracks = selectRandomTracks(parsedResults.tracklist),
+            //     selected = getSelectedTrackId(tracks),
+            //     result = {
+            //         selected: selected,
+            //         results: tracks
+            //     };
+
+            // res.send(result);
+        });
+
         app.get('/web-audio-test', function (req, res) {
             res.render('web-audio-test', res);
         });
@@ -39,14 +58,29 @@
             res.render('answer');
         });
 
-        app.get('/leaderboard', function (req, res) {
-            res.render('leaderboard');
-        });
 
-        function getSelectedTrack(tracks) {
-            console.log(tracks);
+        function getSelectedTrackId(tracks) {
+
             var randomNumber = Math.floor((Math.random() * tracks.length));
             return tracks[randomNumber];
+        }
+
+        function pickRandomId(results) {
+            var length = results.length;
+            var randomNumber = Math.floor((Math.random()*length));
+            return results[randomNumber].id;
+        }
+
+        function correctSongDetails(track) {
+        	selectedTrack = track;
+        	var parsedResult = JSON.parse(selectedTrack),
+        		result = {
+        			name: parsedResult['name'],
+        			from: parsedResult['takenfrom']['name'],
+        			image: parsedResult['thumbnails']['100x100']
+        		};
+
+        	selectedTrackResult = result;
         }
 
         function selectRandomTracks(tracks) {
@@ -62,7 +96,6 @@
                     results.push(tracks[randomTrackIndex]);
                 }
 
-                console.log(results.length, amount);
             }
 
             return results;
@@ -109,12 +142,6 @@
             }
 
             return array;
-        }
-
-        function pickRandomId(results) {
-            var length = results.length;
-            var randomNumber = Math.floor((Math.random()*length));
-            return results[randomNumber].id;
         }
 
     };
