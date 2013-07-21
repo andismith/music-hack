@@ -37,20 +37,7 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
-  // Select an answer
-  function selectAnswer() {
-    var $item = $('.options').find('a'),
-        $selectedPrompt = $('.selected');
-
-    $item.on('click', function(e) {
-      e.preventDefault();
-
-      $item.removeClass('active');
-      $(this).addClass('active');
-
-      $selectedPrompt.show().find('p').html($(this).text());
-    });
-  }
+  
 
   // Init any included plugins
   function initPlugins() {
@@ -63,7 +50,6 @@ window.music = window.music || {};
     context = new AudioContext();
 
     initPlugins();
-    selectAnswer();
     //loadSound(SAMPLE_URL);
   }
 
@@ -105,7 +91,7 @@ window.music.samplePlayer.init();
   function startTimer() {
     var $timer = $('.timer');
 
-    $timer.show();
+    $timer.parent('.remaining').show();
 
     setTimeout(function(){
       $timer.addClass('start');
@@ -118,10 +104,18 @@ window.music.samplePlayer.init();
     setTimeout(function(){
       $timer.find('span').css('background-color', '#E74C3C');
     }, 2000);
+
+    setTimeout(endQuestion, 10000);
   }
 
-  function populateAnswers() {
+  function endQuestion() {
+    var $selected = $('.answer-options').find('.selected');
 
+    if ($selected.length > 0 && window.music.checkAnswerCorrect($selected.data('music-id'))) {
+      window.music.pages.navigateTo('answerCorrect');
+    } else {
+      window.music.pages.navigateTo('answerWrong');
+    }
   }
 
   function showQuestion() {
@@ -130,6 +124,12 @@ window.music.samplePlayer.init();
     $('.answer-options').find('li').last().on('transitionend', function(){
       startTimer();
     });
+  }
+
+  // Select an answer
+  function selectAnswer(e) {
+      e.preventDefault();
+      $(e.target).addClass('selected');
   }
 
   function activate() {
@@ -141,8 +141,15 @@ window.music.samplePlayer.init();
 
   }
 
+  function initEventHandlers() {
+    var $answers = $('.answer-options');
+
+    $answers.on('click', 'a', selectAnswer);
+  }
+
   function init() {
     initComplete = true;
+    initEventHandlers();
   }
 
   question.activate = activate;
@@ -186,8 +193,6 @@ window.music.samplePlayer.init();
       i = 0;
     }
 
-    console.log(i, length);
-
     if (i < length) {
       $countdown.removeClass('current');
       $countdown.eq(i).addClass('current');
@@ -227,6 +232,7 @@ window.music.samplePlayer.init();
     .done(function(data) {
       loadAudio(data);
       populateAnswers(data);
+      window.music.storeAnswer(data.selected);
     });
   }
 
@@ -290,8 +296,18 @@ window.music.samplePlayer.init();
 
 (function(music, $) {
 
-  var $body = $('body'),
+  var answer = 0,
+      $body = $('body'),
       $songSample = $('#song-sample');
+
+  function storeAnswer(id) {
+    answer = parseInt(id, 10);
+  }
+
+  function checkAnswerCorrect(id) {
+    console.log(id, answer);
+    return (parseInt(id, 10) === answer);
+  }
 
   function init() {
 
@@ -301,6 +317,8 @@ window.music.samplePlayer.init();
   }
 
   music.$songSample = $songSample;
+  music.storeAnswer = storeAnswer;
+  music.checkAnswerCorrect = checkAnswerCorrect;
   music.init = init;
 
 })(window.music = window.music || {}, jQuery);

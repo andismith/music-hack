@@ -199,7 +199,7 @@ h2 {
                 background: #2980B9;
             }
 
-            &.active {
+            &.selected {
                 background-color: #5cb85c;
             }
 
@@ -230,7 +230,6 @@ h2 {
 }
 
 .timer {
-    display: none;
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
@@ -243,7 +242,7 @@ h2 {
         height: 5px;
         background: #5cb85c;
         border-radius: 5px;
-        transition: all 10s ease;
+        transition: all 10s ease-out;
     }
 
     &.start span {
