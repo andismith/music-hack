@@ -129,6 +129,7 @@ window.music.samplePlayer.init();
   // Select an answer
   function selectAnswer(e) {
       e.preventDefault();
+      $('.answer-options').find('a').removeClass('selected');
       $(e.target).addClass('selected');
   }
 

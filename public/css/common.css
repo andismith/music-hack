@@ -760,7 +760,7 @@ h2 {
 }
 
 .answer-options li a:hover:after,
-.answer-options li a.active:after {
+.answer-options li a.selected:after {
   display: block;
 }
 
