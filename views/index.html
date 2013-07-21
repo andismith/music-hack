@@ -40,8 +40,8 @@
           <p>Play on your own and try to gain a place on our global leaderboard, or invite your friends. It's entirely up to you!</p>
         </div>
 
-        <form action="/play">
-          <input type="text" class="name" placeholder="Enter your name..." required />
+        <form class="user-form" action="/loading">
+          <input type="text" id="name" class="name" placeholder="Enter your name..." required />
           <a href="/loading" class="navigate button">Play</a>
         </form>
 
@@ -139,9 +139,24 @@
         <a href="/index" class="button navigate">Play Again</a>
       </section>
 
+      <footer>
+        <ul class="score-board">
+          <li>
+            <strong>Score:</strong>
+            <span class="score">0</span>
+          </li>
+          <li>
+            <strong>Round:</strong>
+            <span class="round">0</span>/<span class="total-rounds">0</span>
+          </li>
+          <li>
+            <strong>Hi-Score:</strong>
+            <span class="hi-score">0</span>
+          </li>
+        </ul>
+      </footer>
     </div>
       
-
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
     <script src="/js/libs/fittext.js"></script>
     <script src="/js/script.js"></script>

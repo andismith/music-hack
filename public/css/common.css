@@ -594,12 +594,17 @@ body {
 
 .page.active {
   display: block;
+  min-height: 400px;
 }
 
 .container {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+}
+
+header {
+  border-bottom: solid 1px #333;
 }
 
 h1 {
@@ -637,6 +642,11 @@ h2 {
   font-size: 20px;
   text-align: center;
   border-radius: 3px;
+}
+
+.name.error {
+  -webkit-box-shadow: 0 0 0 3px #d9534f;
+  box-shadow: 0 0 0 3px #d9534f;
 }
 
 /* questions */
@@ -879,6 +889,29 @@ h2 {
 .leaderboard th,
 .leaderboard td {
   padding: 8px 16px;
+}
+
+.score-board {
+  border-top: solid 1px #333;
+  list-style-type: none;
+  margin: 20px 0 0;
+  overflow: hidden;
+  padding: 0;
+  width: auto;
+}
+
+.score-board li {
+  float: left;
+  padding-top: 10px;
+  text-align: center;
+  width: 33.3%;
+}
+
+.score-board strong {
+  color: #bbb;
+  display: block;
+  font-weight: 500;
+  padding-bottom: 10px;
 }
 
 /*# sourceMappingURL=common.css.map */
