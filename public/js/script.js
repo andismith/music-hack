@@ -70,6 +70,7 @@ window.music = window.music || {};
 
   rounds.updateRound = updateRound;
   rounds.getRound = getRound;
+  rounds.getTotalRound = getTotalRound;
   rounds.incrementRound = incrementRound;
   rounds.setRound = setRound;
 
@@ -152,7 +153,7 @@ window.music = window.music || {};
   function showQuestion() {
     window.music.animation.handleAnimation('.answer-options li', true);
     $songSample.get(0).play();
-    $('.answer-options').find('li').last().on('transitionend', function(){
+    $('.answer-options').find('li').last().one('transitionend', function(){
       startTimer();
     });
   }
@@ -199,10 +200,17 @@ window.music = window.music || {};
       init();
     }
 
+    window.music.rounds.incrementRound();
+
     setTimeout(function() {
-      window.music.rounds.incrementRound();
-      window.music.pages.navigateTo('loading');
+      if (window.music.rounds.getRound() > window.music.rounds.getTotalRound()) {
+        window.music.rounds.setRound(0);
+        window.music.pages.navigateTo('leaderboard');
+      } else {
+          window.music.pages.navigateTo('loading');
+      }
     }, 4000);
+
   }
 
   function init() {
