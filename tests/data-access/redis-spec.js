@@ -7,7 +7,8 @@ describe("Writing to Redis", function(){
 		var now = new Date(),
 			username = "un_"+now,
 			scoreToAdd = 123456,
-			highScore;
+			highScore,
+			leaderboard;
 
 		// When
 		runs(function() {
@@ -43,7 +44,7 @@ describe("Writing to Redis", function(){
 			flag = false;
 			redis.addScore(username, firstScoreToAdd, function() {
 				redis.addScore(username, secondScoreToAdd, function() {
-					highScore = redis.findScore(username, function(score) {
+					redis.findScore(username, function(score) {
 						highScore = score;
 						flag = true;
 					});
@@ -74,7 +75,7 @@ describe("Writing to Redis", function(){
 			flag = false;
 			redis.addScore(username, firstScoreToAdd, function() {
 				redis.addScore(username, secondScoreToAdd, function() {
-					highScore = redis.findScore(username, function(score) {
+					redis.findScore(username, function(score) {
 						highScore = score;
 						flag = true;
 					});
@@ -94,16 +95,19 @@ describe("Writing to Redis", function(){
 
 	it("should return top x records in leaderboard", function() {
 		// Given
-		var scores = {"user1":10, "user2":9, "user3":8, "user4":7, "user5":6, "user6":5};
-/*
+
 		// When
 		runs(function() {
 			flag = false;
-			redis.addScore(username, firstScoreToAdd, function() {
-				redis.addScore(username, secondScoreToAdd, function() {
-					highScore = redis.findScore(username, function(score) {
-						highScore = score;
-						flag = true;
+			redis.addScore("user1", 9999999, function() {
+				redis.addScore("user2", 9999998, function() {
+					redis.addScore("user3", 9999997, function() {
+						redis.addScore("user4", 9999996, function() {
+							redis.leaderboard(3, function(lb) {
+								leaderboard = lb;
+								flag = true;
+							});
+						});
 					});
 				});
 			});
@@ -115,8 +119,13 @@ describe("Writing to Redis", function(){
 
 		// Then
 		runs(function() {
-			expect(highScore).toMatch(firstScoreToAdd);
+			expect(leaderboard.length).toMatch(3);
+			expect(leaderboard[0].name).toMatch("user1");
+			expect(leaderboard[0].score).toMatch(9999999);
+			expect(leaderboard[1].name).toMatch("user2");
+			expect(leaderboard[1].score).toMatch(9999998);
+			expect(leaderboard[2].name).toMatch("user3");
+			expect(leaderboard[2].score).toMatch(9999997);
 	    });
-		*/
 	});
 });

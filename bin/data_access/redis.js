@@ -34,20 +34,30 @@ module.exports = (function(){
 		});
 	}
 
-	function leaderboard(size) {
-		var client = redis.createClient(config.AppConfig.Redis.port, config.AppConfig.Redis.host);
-		client.ZREVRANGE(config.AppConfig.Redis.leaderboard, 0, size-1, 'WITHSCORE', function(err, lb) {
+	function leaderboard(size, callback) {
+		var client = redis.createClient(config.AppConfig.Redis.port, config.AppConfig.Redis.host),
+		i,
+		formatted = [];		
+		client.ZREVRANGE(config.AppConfig.Redis.leaderboard, 0, size-1, ['WITHSCORES'], function(err, lb) {
 			util.handleError(err);
 			client.quit();
+			for (var i = 0; i < lb.length; i++) {
+				formatted.push({
+					name: lb[i],
+					score: lb[++i]
+				});
+			};
+			
 			util.safeCallback(function() {
-				callback(score);
+				callback(formatted);
 			});
 		});
 	}
 	
 	return {
 		addScore: addScore,
-		findScore: findScore
+		findScore: findScore,
+		leaderboard: leaderboard
 	};
 
 }());
