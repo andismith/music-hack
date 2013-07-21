@@ -661,10 +661,11 @@ h2 {
   border-radius: 50%;
   color: white;
   display: none;
-  font-size: 6em;
-  height: 200px;
-  line-height: 200px;
-  width: 200px;
+  font-size: 50px;
+  width: 150px;
+  height: 150px;
+  line-height: 3;
+  margin: 30px auto 0;
   text-align: center;
 }
 
@@ -769,11 +770,17 @@ h2 {
   opacity: 1;
 }
 
+.remaining {
+  display: none;
+}
+
 .timer {
+  display: none;
   width: 100%;
   max-width: 320px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
 }
 
 .timer span {
@@ -788,6 +795,20 @@ h2 {
 
 .timer.start span {
   width: 0;
+}
+
+.answer {
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+.answer img {
+  display: block;
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=common.css.map */

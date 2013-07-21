@@ -5,7 +5,6 @@ window.music = window.music || {};
   'use strict';
 
   var SAMPLE_URL = 'http://api.ent.nokia.com/1.x/gb/products/47560659/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A';
-//'music/320403433.mp3';
 
   var sampleBuffer = null,
     context = {};
@@ -105,7 +104,11 @@ window.music.samplePlayer.init();
   function startTimer() {
     var $timer = $('.timer');
 
-    $timer.addClass('start');
+    $timer.show();
+
+    setTimeout(function(){
+      $timer.addClass('start');
+    }, 20);
 
     setTimeout(function(){
       $timer.find('span').css('background-color', '#F39C12');
@@ -120,7 +123,9 @@ window.music.samplePlayer.init();
     $container.addClass('ready');
     window.music.animation.handleAnimation('.options li', true);
     $songSample.get(0).play();
-    startTimer();
+    $('.options').find('li').last().on('transitionend', function(){
+      startTimer();
+    });
   }
   function countdown(i) {
     var $countdown = $('.countdown li'),
@@ -141,10 +146,13 @@ window.music.samplePlayer.init();
       }, 500);
     } else {
       showQuestion();
+      $('.remaining').show();
     }
   }
 
-  function loadAudio() {
+  function loadAudio(e) {
+    e.preventDefault();
+
     $songSample.get(0).load();
     $songSample.on('loadeddata', function() {
       countdown(0);
