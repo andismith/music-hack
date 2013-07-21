@@ -804,11 +804,21 @@ h2 {
   padding: 15px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .answer img {
+  float: left;
   display: block;
   border-radius: 5px;
+}
+
+.answer p {
+  float: right;
+  text-align: left;
+  clear: right;
+  width: 175px;
+  margin: 0 0 10px;
 }
 
 /*# sourceMappingURL=common.css.map */
