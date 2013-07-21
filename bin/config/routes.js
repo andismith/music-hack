@@ -10,11 +10,13 @@
     new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
     function songsRetrieved(songs) {
+        var resultCount,
+            randomNumber;
+
         songsSearchResults = songs;
     }
 
     module.exports = function (app) {
-
         var resultCount;
 
         app.get('/', function (req, res) {
@@ -43,18 +45,20 @@
         });
 
         function pickRandomId(results) {
-            //console.log(results)
             var randomNumber = Math.floor((Math.random() * +config.AppConfig.Results.count));
 
             return results[randomNumber].id;
         }
 
         function randomList(results) {
-            var arr = [];
+            var arr = [],
+                randomnumber,
+                found;
+
             arr.length = 0;
             while (arr.length < config.AppConfig.Results.count) {
-                var randomnumber = Math.floor(Math.random() + (resultCount - 1));
-                var found = false;
+                randomnumber = Math.floor(Math.random() + (resultCount - 1));
+                found = false;
 
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i] === randomnumber) {
@@ -66,6 +70,28 @@
                 if (!found) arr[arr.length] = results[i].name;
             }
             return arr;
+        }
+
+
+        function randomiseArray(array) {
+            var currentIndex = array.length,
+                temporaryValue,
+                randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
         }
     };
 }());

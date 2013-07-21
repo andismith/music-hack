@@ -5,7 +5,7 @@ exports.AppConfig = {
         app_id: '_WN7DlNjki_uTKc7kY1A'
     },
     Results: {
-        count: 5
+        count: 3
     },
     Templates: {
         path: __dirname + '/../templates/',
@@ -13,5 +13,13 @@ exports.AppConfig = {
     },
     Express: {
         PORT: 3000
-    }
+    },
+	MongoDB: {
+		conn_string: 'mongodb://127.0.0.1:27017/leaderboards',
+		collection: 'all'
+	},
+	Redis: {
+		host: '127.0.0.1',
+		port: 6379
+	}
 };
