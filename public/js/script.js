@@ -210,6 +210,7 @@ window.music = window.music || {};
   function getAnswer(id) {
     $.ajax('/getAnswer/' + id)
     .done(function(data) {
+      debugger;
       var $answer = $('.answer');
       $answer.find('.song').html(data.name);
       $answer.find('.artist').html(data.from);
