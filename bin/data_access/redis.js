@@ -17,7 +17,7 @@ module.exports = (function(){
 			}
 			else {
 				util.safeCallback(function() {
-					callback(score);
+					callback();
 				});
 			}
 		});
