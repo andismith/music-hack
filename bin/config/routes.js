@@ -4,6 +4,7 @@
     'use strict';
 
     var nokiaAPI = require('../nokia-api/stream'),
+        redis = require('../data_access/redis'),
         config = require('../config/app_config'),
         songsSearchResults,
         selectedTrack,
@@ -58,6 +59,13 @@
             res.render('answer');
         });
 
+        app.post('/addScore', function (req, res) {
+
+            console.log(req);
+
+            //redis.addScore(username, score, )
+
+        });
 
         function getSelectedTrackId(tracks) {
 
