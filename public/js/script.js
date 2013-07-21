@@ -37,20 +37,7 @@ window.music = window.music || {};
     source.start(0);                           // play the source now
   }
 
-  // Select an answer
-  function selectAnswer() {
-    var $item = $('.options').find('a'),
-        $selectedPrompt = $('.selected');
-
-    $item.on('click', function(e) {
-      e.preventDefault();
-
-      $item.removeClass('active');
-      $(this).addClass('active');
-
-      $selectedPrompt.show().find('p').html($(this).text());
-    });
-  }
+  
 
   // Init any included plugins
   function initPlugins() {
@@ -63,7 +50,6 @@ window.music = window.music || {};
     context = new AudioContext();
 
     initPlugins();
-    selectAnswer();
     //loadSound(SAMPLE_URL);
   }
 
@@ -96,7 +82,8 @@ window.music.samplePlayer.init();
 })(window.music.animation = window.music.animation || {}, jQuery);
 
 (function(question, $) {
-  var $container = $('.container'),
+  var initComplete = false,
+      $container = $('.container'),
       $goButton = $('.go'),
       $songSample = $('#song-sample');
 
@@ -104,7 +91,7 @@ window.music.samplePlayer.init();
   function startTimer() {
     var $timer = $('.timer');
 
-    $timer.show();
+    $timer.parent('.remaining').show();
 
     setTimeout(function(){
       $timer.addClass('start');
@@ -117,16 +104,87 @@ window.music.samplePlayer.init();
     setTimeout(function(){
       $timer.find('span').css('background-color', '#E74C3C');
     }, 2000);
+
+    setTimeout(endQuestion, 10000);
+  }
+
+  function endQuestion() {
+    var $selected = $('.answer-options').find('.selected');
+
+    if ($selected.length > 0 && window.music.checkAnswerCorrect($selected.data('music-id'))) {
+      window.music.pages.navigateTo('answerCorrect');
+    } else {
+      window.music.pages.navigateTo('answerWrong');
+    }
   }
 
   function showQuestion() {
-    $container.addClass('ready');
-    window.music.animation.handleAnimation('.options li', true);
+    window.music.animation.handleAnimation('.answer-options li', true);
     $songSample.get(0).play();
-    $('.options').find('li').last().on('transitionend', function(){
+    $('.answer-options').find('li').last().on('transitionend', function(){
       startTimer();
     });
   }
+
+  // Select an answer
+  function selectAnswer(e) {
+      e.preventDefault();
+      $(e.target).addClass('selected');
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    showQuestion();
+
+  }
+
+  function initEventHandlers() {
+    var $answers = $('.answer-options');
+
+    $answers.on('click', 'a', selectAnswer);
+  }
+
+  function init() {
+    initComplete = true;
+    initEventHandlers();
+  }
+
+  question.activate = activate;
+  question.init = init;
+
+}(window.music.question = window.music.question || {}, jQuery));
+
+(function(answer, $) {
+
+  var initComplete = false;
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+  }
+
+  function init() {
+    initComplete = true;
+
+  }
+
+  answer.activate = activate;
+  answer.init = init;
+
+})(window.music.answer = window.music.answer || {}, jQuery);
+
+
+(function(loading, $) {
+
+  var AUDIO_URL_PREFIX = 'http://api.ent.nokia.com/1.x/gb/products/',
+      AUDIO_URL_SUFFIX = '/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A';
+
+  var initComplete = false;
+
   function countdown(i) {
     var $countdown = $('.countdown li'),
       length = $countdown.length;
@@ -135,67 +193,132 @@ window.music.samplePlayer.init();
       i = 0;
     }
 
-    console.log(i, length);
-
     if (i < length) {
-      $countdown.removeClass('active');
-      $countdown.eq(i).addClass('active');
+      $countdown.removeClass('current');
+      $countdown.eq(i).addClass('current');
 
       setTimeout(function() {
         countdown(++i);
       }, 500);
     } else {
-      showQuestion();
-      $('.remaining').show();
+      window.music.pages.navigateTo('question');
     }
   }
 
-  function loadAudio(e) {
-    e.preventDefault();
+  function populateAnswers(data) {
 
-    $songSample.get(0).load();
-    $songSample.on('loadeddata', function() {
+    var i = 0,
+        length = data.results.length,
+        html = '',
+        $answers = $('.answer-options');
+
+    for (i=0; i<length; i++) {
+      html += '<li><a href="#" data-icon="check" data-music-id="' + data.results[i].id + '">' + data.results[i].name + '</a></li>';
+    }
+
+    $answers.html(html);
+  }
+
+  function loadAudio(data) {
+    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected + AUDIO_URL_SUFFIX);
+    music.$songSample.get(0).load();
+    music.$songSample.one('loadeddata', function() {
       countdown(0);
     });
   }
 
-  function initEvents() {
-    console.log('init events');
-    $goButton.on('click', loadAudio);
+  function loadQuestion() {
+    $.ajax('/getQuestion')
+    .done(function(data) {
+      loadAudio(data);
+      populateAnswers(data);
+      window.music.storeAnswer(data.selected);
+    });
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    loadQuestion();
   }
 
   function init() {
-    initEvents();
+    initComplete = true;
   }
 
-  question.init = init;
+  loading.activate = activate;
+  loading.init = init;
 
-}(window.music.question = window.music.question || {}, jQuery));
+})(window.music.loading = window.music.loading || {}, jQuery);
 
-(function(answer, $) {
+/* page handler */
+(function(pages, $) {
+
+  var $pages = $('.page');
+
+  function activatePage(pageName) {
+    if (window.music[pageName] && window.music[pageName].activate) {
+      window.music[pageName].activate();
+    }
+  }
+
+  function navigateTo(pageName) {
+    var oldPage = {},
+        newPage = {};
+
+    oldPage = $pages.filter('.active');
+    newPage = $pages.filter('[data-page-id=' + pageName + ']');
+    
+    oldPage.removeClass('active');
+    newPage.addClass('active');
+
+    activatePage(pageName);
+  }
+
+  function initEventHandler() {
+    $pages.on('click', '.navigate', function(e) {
+      var pageName = e.target.pathname.replace(/\//,'');
+      e.preventDefault();
+      navigateTo(pageName);
+    });
+  }
 
   function init() {
-
+    initEventHandler();
   }
 
-  answer.init = init;
+  pages.navigateTo = navigateTo;
+  pages.init = init;
 
-})(window.music.answer = window.music.answer || {}, jQuery);
+})(window.music.pages = window.music.pages || {}, jQuery);
 
 (function(music, $) {
 
-  var $body = $('body');
+  var answer = 0,
+      $body = $('body'),
+      $songSample = $('#song-sample');
+
+  function storeAnswer(id) {
+    answer = parseInt(id, 10);
+  }
+
+  function checkAnswerCorrect(id) {
+    console.log(id, answer);
+    return (parseInt(id, 10) === answer);
+  }
 
   function init() {
-    var pageId = $body.data('page-id');
 
-    if (pageId !== undefined && window.music[pageId]) {
-      window.music[pageId].init();
-    }
+    window.music.pages.init();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
+  music.$songSample = $songSample;
+  music.storeAnswer = storeAnswer;
+  music.checkAnswerCorrect = checkAnswerCorrect;
   music.init = init;
 
 })(window.music = window.music || {}, jQuery);

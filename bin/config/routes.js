@@ -10,30 +10,25 @@
     new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
     function songsRetrieved(songs) {
-        var resultCount,
-            randomNumber;
-
         songsSearchResults = songs;
     }
 
-    module.exports = function (app) {
-        var resultCount;
+    module.exports = function(app) {
 
-        app.get('/', function (req, res) {
+        app.get('/', function(req, res) {
             res.render('index');
         });
 
-        app.get('/play', function (req, res) {
+        app.get('/getQuestion', function(req, res) {
             var parsedResults = JSON.parse(songsSearchResults),
-                randomId = pickRandomId(parsedResults.tracklist);
+                tracks = selectRandomTracks(parsedResults.tracklist),
+                selected = getSelectedTrackId(tracks),
+                result = {
+                    selected: selected,
+                    results: tracks
+                };
 
-            resultCount = parsedResults.tracklist.length;
-            console.log(randomList(parsedResults.tracklist));
-
-            res.render('question', {
-                'selected': randomId,
-                'results': randomList(parsedResults.tracklist)
-            });
+            res.send(result);
         });
 
         app.get('/web-audio-test', function (req, res) {
@@ -44,10 +39,29 @@
             res.render('answer');
         });
 
-        function pickRandomId(results) {
-            var randomNumber = Math.floor((Math.random() * +config.AppConfig.Results.count));
+        function getSelectedTrackId(tracks) {
+            console.log(tracks);
+            var randomNumber = Math.floor((Math.random() * tracks.length));
+            return tracks[randomNumber].id;
+        }
 
-            return results[randomNumber].id;
+        function selectRandomTracks(tracks) {
+            var amount = config.AppConfig.Results.count,
+                randomTrackIndex = 0,
+                results = [],
+                tracksLength = tracks.length;
+            while (results.length <= amount) {
+
+                randomTrackIndex = Math.floor(Math.random() * (tracksLength - 1));
+                if (!tracks[randomTrackIndex].found) {
+                    tracks[randomTrackIndex].found = true;
+                    results.push(tracks[randomTrackIndex]);
+                }
+
+                console.log(results.length, amount);
+            }
+
+            return results;
         }
 
         function randomList(results) {
@@ -93,5 +107,12 @@
 
             return array;
         }
+
+        function pickRandomId(results) {
+            var length = results.length;
+            var randomNumber = Math.floor((Math.random()*length));
+            return results[randomNumber].id;
+        }     
+
     };
 }());

@@ -14,6 +14,11 @@ exports.AppConfig = {
     Express: {
         PORT: 3000
     },
+    Pusher: {
+        appId: '49914',
+        key: '725cbee63f04668c5e7f',
+        secret: '65253375a6f9ea5141de'
+    },
 	MongoDB: {
 		conn_string: 'mongodb://127.0.0.1:27017/leaderboards',
 		collection: 'all'

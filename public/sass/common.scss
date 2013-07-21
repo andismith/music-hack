@@ -40,6 +40,16 @@ body {
     font-smoothing: antialiased;
 }
 
+/* base styles */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+
 .container {
     width: 100%;
     max-width: 640px;
@@ -101,9 +111,11 @@ h2 {
 
 
 .countdown {
+    height: 150px;
     list-style-type: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    width: 150px;
 
     li {
         border-radius: 50%;
@@ -116,7 +128,7 @@ h2 {
         margin: 30px auto 0;
         text-align: center;
 
-        &.active {
+        &.current {
             display: block;
         }
 
@@ -159,7 +171,7 @@ h2 {
     }
 }
 
-.options {
+.answer-options {
     margin: 0;
     padding: 0;
 
@@ -187,7 +199,7 @@ h2 {
                 background: #2980B9;
             }
 
-            &.active {
+            &.selected {
                 background-color: #5cb85c;
             }
 
@@ -208,7 +220,7 @@ h2 {
     animation-fill-mode: both;
 }
 
-.options li.play {
+.answer-options li.play {
     transform: translateX(0);
     opacity: 1;
 }
@@ -218,7 +230,6 @@ h2 {
 }
 
 .timer {
-    display: none;
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
@@ -231,7 +242,7 @@ h2 {
         height: 5px;
         background: #5cb85c;
         border-radius: 5px;
-        transition: all 10s ease;
+        transition: all 10s ease-out;
     }
 
     &.start span {
