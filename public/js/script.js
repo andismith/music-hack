@@ -193,22 +193,41 @@ window.music = window.music || {};
 
   var initComplete = false;
 
-  function activate() {
-    if (!initComplete) {
-      init();
-    }
-
-    window.music.rounds.incrementRound();
-
+  function moveNext() {
     setTimeout(function() {
       if (window.music.rounds.getRound() > window.music.rounds.getTotalRound()) {
         window.music.rounds.setRound(0);
         window.music.pages.navigateTo('leaderboard');
       } else {
-          window.music.pages.navigateTo('loading');
+        window.music.pages.navigateTo('loading');
       }
     }, 4000);
 
+  }
+
+  function getAnswer(id) {
+    $.ajax('/getAnswer/' + id)
+    .done(function(data) {
+      var $answer = $('.answer');
+      $answer.find('.song').html(data.name);
+      $answer.find('.artist').html(data.from);
+      $answer.find('.thumbnail').prop('src', data.image);
+      $answer.show();
+    });
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    $('.answer').hide();
+
+    getAnswer(window.music.getAnswer().id);
+
+    window.music.rounds.incrementRound();
+
+    moveNext();
   }
 
   function init() {
@@ -216,6 +235,7 @@ window.music = window.music || {};
 
   }
 
+  answer.getAnswer = getAnswer;
   answer.activate = activate;
   answer.init = init;
 
@@ -418,7 +438,7 @@ window.music.answerWrong = window.music.answer;
   }
 
   function getAnswer() {
-    return data;
+    return answer;
   }
 
   function checkAnswerCorrect(id) {
@@ -434,6 +454,7 @@ window.music.answerWrong = window.music.answer;
   }
 
   music.$songSample = $songSample;
+  music.getAnswer = getAnswer;
   music.storeAnswer = storeAnswer;
   music.checkAnswerCorrect = checkAnswerCorrect;
   music.init = init;
