@@ -15,38 +15,20 @@
 
     module.exports = function(app) {
 
-        var resultCount,
-            randomNumber;
+        app.get('/', function(req, res) {
+            res.render('index');
+        });
 
-        function randomNumber(min, max) {
-            return Math.round(Math.random() * (max - min)) + min;
-        }
-
-        function initSite(req, res) {
-            var pusher = require('../pusher/index.js'),
-                auth = {},
-                data = {
-                    channelId: 'c-' + (req.params.id || randomNumber(10000,99999))
+        app.get('/getQuestion', function(req, res) {
+            var parsedResults = JSON.parse(songsSearchResults),
+                tracks = selectRandomTracks(parsedResults.tracklist),
+                selected = getSelectedTrackId(tracks),
+                result = {
+                    selected: selected,
+                    results: tracks
                 };
 
-            pusher.initChannel(data.channelId);
-                res.render('index', data);
-        }
-
-        app.get('/', initSite);
-
-        app.get('/c:id(\\d+)', initSite);
-
-        app.get('/play', function(req, res) {
-            var parsedResults = JSON.parse(songsSearchResults);
-                resultCount = parsedResults.tracklist.length;
-            var randomId = pickRandomId(parsedResults.tracklist);
-                    
-
-            res.render('question', {
-                'selected': randomId,
-                'results': randomList(parsedResults.tracklist)
-            });
+            res.send(result);
         });
 
         app.get('/web-audio-test', function (req, res) {
@@ -57,10 +39,29 @@
             res.render('answer');
         });
 
-        function pickRandomId(results) {
-            var randomNumber = Math.floor((Math.random() * +config.AppConfig.Results.count));
+        function getSelectedTrackId(tracks) {
+            console.log(tracks);
+            var randomNumber = Math.floor((Math.random() * tracks.length));
+            return tracks[randomNumber].id;
+        }
 
-            return results[randomNumber].id;
+        function selectRandomTracks(tracks) {
+            var amount = config.AppConfig.Results.count,
+                randomTrackIndex = 0,
+                results = [],
+                tracksLength = tracks.length;
+            while (results.length <= amount) {
+
+                randomTrackIndex = Math.floor(Math.random() * (tracksLength - 1));
+                if (!tracks[randomTrackIndex].found) {
+                    tracks[randomTrackIndex].found = true;
+                    results.push(tracks[randomTrackIndex]);
+                }
+
+                console.log(results.length, amount);
+            }
+
+            return results;
         }
 
         function randomList(results) {
@@ -107,57 +108,11 @@
             return array;
         }
 
-        app.get('/web-audio-test', function (req, res){
-            res.render('web-audio-test', res);           
-        });
-
         function pickRandomId(results) {
-            randomNumber = Math.floor((Math.random()*resultCount));
+            var length = results.length;
+            var randomNumber = Math.floor((Math.random()*length));
             return results[randomNumber].id;
-        }
-
-        function randomList(results) {          
-
-            var arr = [],
-                pickedSongs = {};
-            while(arr.length < config.AppConfig.Results.count){
-                var randomnumber=Math.ceil(Math.random()*resultCount)
-                  var found=false;
-                  for(var i=0;i<arr.length;i++){
-                    if(arr[i]==randomnumber){found=true;break}
-                  }
-                  if(!found){
-                    arr[arr.length]={'id': results[randomnumber].id, 'name': results[randomnumber].name};
-                    
-                  }
-            }
-            
-            arr.push({'id': results[randomNumber].id, 'name': results[randomNumber].name});
-            arr = randomiseArray(arr);
-            console.log(pickedSongs, arr)
-            return arr;
-        }       
-
-        function randomiseArray(array){
-            var currentIndex = array.length,
-                temporaryValue,
-                randomIndex;
-
-                // While there remain elements to shuffle...
-                while (0 !== currentIndex) {
-
-                // Pick a remaining element...
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                // And swap it with the current element.
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-                }
-
-                return array;
-        }       
+        }     
 
     };
 }());

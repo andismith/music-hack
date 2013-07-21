@@ -96,7 +96,8 @@ window.music.samplePlayer.init();
 })(window.music.animation = window.music.animation || {}, jQuery);
 
 (function(question, $) {
-  var $container = $('.container'),
+  var initComplete = false,
+      $container = $('.container'),
       $goButton = $('.go'),
       $songSample = $('#song-sample');
 
@@ -119,35 +120,61 @@ window.music.samplePlayer.init();
     }, 2000);
   }
 
+  function populateAnswers() {
+
+  }
+
   function showQuestion() {
-    $container.addClass('ready');
-    window.music.animation.handleAnimation('.options li', true);
+    window.music.animation.handleAnimation('.answer-options li', true);
     $songSample.get(0).play();
-    $('.options').find('li').last().on('transitionend', function(){
+    $('.answer-options').find('li').last().on('transitionend', function(){
       startTimer();
     });
   }
 
-  function init() {
-    initEvents();
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    showQuestion();
+
   }
 
+  function init() {
+    initComplete = true;
+  }
+
+  question.activate = activate;
   question.init = init;
 
 }(window.music.question = window.music.question || {}, jQuery));
 
 (function(answer, $) {
 
+  var initComplete = false;
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+  }
+
   function init() {
+    initComplete = true;
 
   }
 
+  answer.activate = activate;
   answer.init = init;
 
 })(window.music.answer = window.music.answer || {}, jQuery);
 
 
 (function(loading, $) {
+
+  var AUDIO_URL_PREFIX = 'http://api.ent.nokia.com/1.x/gb/products/',
+      AUDIO_URL_SUFFIX = '/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A';
 
   var initComplete = false;
 
@@ -169,20 +196,38 @@ window.music.samplePlayer.init();
         countdown(++i);
       }, 500);
     } else {
-      showQuestion();
-      $('.remaining').show();
+      window.music.pages.navigateTo('question');
     }
   }
 
-  function loadAudio() {
+  function populateAnswers(data) {
+
+    var i = 0,
+        length = data.results.length,
+        html = '',
+        $answers = $('.answer-options');
+
+    for (i=0; i<length; i++) {
+      html += '<li><a href="#" data-icon="check" data-music-id="' + data.results[i].id + '">' + data.results[i].name + '</a></li>';
+    }
+
+    $answers.html(html);
+  }
+
+  function loadAudio(data) {
+    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected + AUDIO_URL_SUFFIX);
     music.$songSample.get(0).load();
-    music.$songSample.on('loadeddata', function() {
+    music.$songSample.one('loadeddata', function() {
       countdown(0);
     });
   }
 
-  function getAudioUrl() {
-    music.socket.send('getQuestion');
+  function loadQuestion() {
+    $.ajax('/getQuestion')
+    .done(function(data) {
+      loadAudio(data);
+      populateAnswers(data);
+    });
   }
 
   function activate() {
@@ -190,7 +235,7 @@ window.music.samplePlayer.init();
       init();
     }
 
-    getAudioUrl();
+    loadQuestion();
   }
 
   function init() {
@@ -201,43 +246,6 @@ window.music.samplePlayer.init();
   loading.init = init;
 
 })(window.music.loading = window.music.loading || {}, jQuery);
-
-
-/* sockets */
-(function(socket, $) {
-
-  var APP_KEY = '725cbee63f04668c5e7f';
-
-  var channel;
-
-  // listen to an event, and run a certain action
-  function listen(event, action) {
-    console.log('binding ' + event);
-    channel.bind(event, function(data) {
-      if (action) {
-        action(data);
-      }
-    });
-  }
-
-  // send an event to pusher
-  function send(event, data) {
-    channel.trigger(event, data);
-  }
-
-  function init() {
-    var pusher = new Pusher(APP_KEY);
-    channel = pusher.subscribe(channelId);
-    channel.bind('pusher:subscription_succeeded', function() {
-      console.log('Connected on ' + channelId);
-    });
-  }
-
-  socket.send = send;
-  socket.listen = listen;
-  socket.init = init;
-
-})(window.music.socket = window.music.socket || {}, jQuery);
 
 /* page handler */
 (function(pages, $) {
@@ -290,11 +298,6 @@ window.music.samplePlayer.init();
     window.music.pages.init();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
-
-    window.music.socket.init();
-    window.music.socket.listen('question', function(data) {
-      console.log('hi' + data.message);
-    });
   }
 
   music.$songSample = $songSample;
