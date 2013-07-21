@@ -24,16 +24,13 @@
 
         function initSite(req, res) {
             var pusher = require('../pusher/index.js'),
+                auth = {},
                 data = {
-                    channelId: 'c' + (req.params.id || randomNumber(10000,99999))
+                    channelId: 'c-' + (req.params.id || randomNumber(10000,99999))
                 };
 
             pusher.initChannel(data.channelId);
-            res.render('index', data);
-
-            setTimeout(function() {
-                pusher.sendQuestion();
-            }, 3000);
+                res.render('index', data);
         }
 
         app.get('/', initSite);

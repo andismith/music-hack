@@ -128,43 +128,6 @@ window.music.samplePlayer.init();
     });
   }
 
-  function countdown(i) {
-    var $countdown = $('.countdown li'),
-      length = $countdown.length;
-
-    if (typeof i === 'undefined') {
-      i = 0;
-    }
-
-    console.log(i, length);
-
-    if (i < length) {
-      $countdown.removeClass('active');
-      $countdown.eq(i).addClass('active');
-
-      setTimeout(function() {
-        countdown(++i);
-      }, 500);
-    } else {
-      showQuestion();
-      $('.remaining').show();
-    }
-  }
-
-  function loadAudio(e) {
-    e.preventDefault();
-
-    $songSample.get(0).load();
-    $songSample.on('loadeddata', function() {
-      countdown(0);
-    });
-  }
-
-  function initEvents() {
-    console.log('init events');
-    $goButton.on('click', loadAudio);
-  }
-
   function init() {
     initEvents();
   }
@@ -183,6 +146,63 @@ window.music.samplePlayer.init();
 
 })(window.music.answer = window.music.answer || {}, jQuery);
 
+
+(function(loading, $) {
+
+  var initComplete = false;
+
+  function countdown(i) {
+    var $countdown = $('.countdown li'),
+      length = $countdown.length;
+
+    if (typeof i === 'undefined') {
+      i = 0;
+    }
+
+    console.log(i, length);
+
+    if (i < length) {
+      $countdown.removeClass('current');
+      $countdown.eq(i).addClass('current');
+
+      setTimeout(function() {
+        countdown(++i);
+      }, 500);
+    } else {
+      showQuestion();
+      $('.remaining').show();
+    }
+  }
+
+  function loadAudio() {
+    music.$songSample.get(0).load();
+    music.$songSample.on('loadeddata', function() {
+      countdown(0);
+    });
+  }
+
+  function getAudioUrl() {
+    music.socket.send('getQuestion');
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    getAudioUrl();
+  }
+
+  function init() {
+    initComplete = true;
+  }
+
+  loading.activate = activate;
+  loading.init = init;
+
+})(window.music.loading = window.music.loading || {}, jQuery);
+
+
 /* sockets */
 (function(socket, $) {
 
@@ -200,27 +220,74 @@ window.music.samplePlayer.init();
     });
   }
 
-  function init() {
-    var pusher = new Pusher(APP_KEY);
-    console.log('channel Id = ' + channelId);
-    channel = pusher.subscribe(channelId);
+  // send an event to pusher
+  function send(event, data) {
+    channel.trigger(event, data);
   }
 
+  function init() {
+    var pusher = new Pusher(APP_KEY);
+    channel = pusher.subscribe(channelId);
+    channel.bind('pusher:subscription_succeeded', function() {
+      console.log('Connected on ' + channelId);
+    });
+  }
+
+  socket.send = send;
   socket.listen = listen;
   socket.init = init;
 
 })(window.music.socket = window.music.socket || {}, jQuery);
 
-(function(music, $) {
+/* page handler */
+(function(pages, $) {
 
-  var $body = $('body');
+  var $pages = $('.page');
+
+  function activatePage(pageName) {
+    if (window.music[pageName] && window.music[pageName].activate) {
+      window.music[pageName].activate();
+    }
+  }
+
+  function navigateTo(pageName) {
+    var oldPage = {},
+        newPage = {};
+
+    oldPage = $pages.filter('.active');
+    newPage = $pages.filter('[data-page-id=' + pageName + ']');
+    
+    oldPage.removeClass('active');
+    newPage.addClass('active');
+
+    activatePage(pageName);
+  }
+
+  function initEventHandler() {
+    $pages.on('click', '.navigate', function(e) {
+      var pageName = e.target.pathname.replace(/\//,'');
+      e.preventDefault();
+      navigateTo(pageName);
+    });
+  }
 
   function init() {
-    var pageId = $body.data('page-id');
+    initEventHandler();
+  }
 
-    if (pageId !== undefined && window.music[pageId]) {
-      window.music[pageId].init();
-    }
+  pages.navigateTo = navigateTo;
+  pages.init = init;
+
+})(window.music.pages = window.music.pages || {}, jQuery);
+
+(function(music, $) {
+
+  var $body = $('body'),
+      $songSample = $('#song-sample');
+
+  function init() {
+
+    window.music.pages.init();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
 
@@ -230,6 +297,7 @@ window.music.samplePlayer.init();
     });
   }
 
+  music.$songSample = $songSample;
   music.init = init;
 
 })(window.music = window.music || {}, jQuery);

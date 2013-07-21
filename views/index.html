@@ -26,25 +26,84 @@
   </head>
   <body>
     <div class="container">
-      <h1>MusicMatch.io</h1>
+      <header>
+        <h1>MusicMatch.io</h1>
+      </header>
 
-      <div class="intro">
-        <p>
-        Take off the headphones, turn down the radio and put your music trivia knowledge to the test using MusicMatch.io.
-        </p>
+      <audio id="song-sample" src="about:blank"></audio>
 
-        <p>Play on your own and try to gain a place on our global leaderboard, or invite your friends. It's entirely up to you!</p>
-      </div>
+      <section class="page active" data-page-id="index">
 
-      <form action="/play">
-        <input type="text" class="name" placeholder="Enter your name..." required />
-        <input type="submit" href="/play" class="button" value="Play" />
-      </form>
+        <div class="overlay">
+          <p>Please make sure your sound is not on mute!!</p>
+        </div>
+
+        <div class="intro">
+          <p>Take off the headphones, turn down the radio and put your music trivia knowledge to the test using MusicMatch.</p>
+
+          <p>Play on your own and try to gain a place on our global leaderboard, or invite your friends. It's entirely up to you!</p>
+        </div>
+
+        <form action="/play">
+          <input type="text" class="name" placeholder="Enter your name..." required />
+          <a href="/loading" class="navigate button">Play</a>
+        </form>
+
+      </section>
+
+      <section class="page" data-page-id="loading">
+        <ul class="countdown">
+          <li class="loading current">Loading</li>
+          <li class="count-3">3</li>
+          <li class="count-2">2</li>
+          <li class="count-1">1</li>
+        </ul>
+      </section>
+
+      <section class="page" data-page-id="question">
+
+        <ul class="options">
+          {{#each results}}
+          <li><a href="#" data-icon="check" data-music-id="{{this.id}}">{{ this.name }}</a></li>
+          {{/each}}
+        </ul>
+
+        <div class="remaining">
+          <p class="timer"><span></span></p>
+        </div>
+
+      </section>
+
+      <section class="page" data-page-id="answer-correct">
+      
+        <h2>Correct!</h2>
+        <p>Your Score: 5</p>
+        <div class="answer">
+          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
+          <p class="artist">Beyonc&eacute;</p>
+          <p class="song">All the single ladies</p>       
+        </div>
+
+      </section>
+
+      <section class="page" data-page-id="answer-correct">
+      
+        <h2>Wrong!</h2>
+        <p>Your Score: 5</p>
+        <div class="answer">
+          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
+          <p class="artist">Beyonc&eacute;</p>
+          <p class="song">All the single ladies</p>       
+        </div>
+
+      </section>
+
     </div>
+      
 
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
     <script src="http://js.pusher.com/2.1/pusher.min.js"></script>
-    <script src="/js/plugins.js"></script>
+    <script src="/js/libs/fittext.js"></script>
     <script src="/js/script.js"></script>
   </body>
 </html>

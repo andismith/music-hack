@@ -40,6 +40,16 @@ body {
     font-smoothing: antialiased;
 }
 
+/* base styles */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+
 .container {
     width: 100%;
     max-width: 640px;
@@ -101,9 +111,11 @@ h2 {
 
 
 .countdown {
+    height: 150px;
     list-style-type: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    width: 150px;
 
     li {
         border-radius: 50%;
@@ -116,7 +128,7 @@ h2 {
         margin: 30px auto 0;
         text-align: center;
 
-        &.active {
+        &.current {
             display: block;
         }
 

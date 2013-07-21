@@ -22,7 +22,12 @@ module.exports = (function () {
 
   }
 
+  function getQuestion() {
+    console.log('getting question');
+  }
+
   return {
+    getQuestion: getQuestion,
     sendQuestion: sendQuestion,
     initChannel: initChannel
   };
