@@ -82,6 +82,8 @@ window.music.samplePlayer.init();
 })(window.music.animation = window.music.animation || {}, jQuery);
 
 (function(question, $) {
+  var QUESTION_LENGTH = 10000;
+
   var initComplete = false,
       $container = $('.container'),
       $goButton = $('.go'),
@@ -99,17 +101,23 @@ window.music.samplePlayer.init();
 
     setTimeout(function(){
       $timer.find('span').css('background-color', '#F39C12');
-    }, 1000);
+    }, QUESTION_LENGTH/10);
 
     setTimeout(function(){
       $timer.find('span').css('background-color', '#E74C3C');
-    }, 2000);
+    }, QUESTION_LENGTH/5);
 
-    setTimeout(endQuestion, 10000);
+    setTimeout(function() {
+      $timer.removeClass('start').find('span').css('background-color','');
+      $timer.parent('.remaining').hide();
+      endQuestion();
+    }, QUESTION_LENGTH);
   }
 
   function endQuestion() {
     var $selected = $('.answer-options').find('.selected');
+
+    $songSample.get(0).pause();
 
     if ($selected.length > 0 && window.music.checkAnswerCorrect($selected.data('music-id'))) {
       window.music.pages.navigateTo('answerCorrect');
@@ -166,6 +174,10 @@ window.music.samplePlayer.init();
     if (!initComplete) {
       init();
     }
+
+    setTimeout(function() {
+      window.music.pages.navigateTo('loading');
+    }, 4000);
   }
 
   function init() {
@@ -178,6 +190,8 @@ window.music.samplePlayer.init();
 
 })(window.music.answer = window.music.answer || {}, jQuery);
 
+window.music.answerCorrect = window.music.answer;
+window.music.answerWrong = window.music.answer;
 
 (function(loading, $) {
 
@@ -202,6 +216,8 @@ window.music.samplePlayer.init();
         countdown(++i);
       }, 500);
     } else {
+      $countdown.removeClass('current');
+      $countdown.eq(0).addClass('current');
       window.music.pages.navigateTo('question');
     }
   }
@@ -221,7 +237,7 @@ window.music.samplePlayer.init();
   }
 
   function loadAudio(data) {
-    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected + AUDIO_URL_SUFFIX);
+    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected.id + AUDIO_URL_SUFFIX);
     music.$songSample.get(0).load();
     music.$songSample.one('loadeddata', function() {
       countdown(0);
@@ -301,13 +317,17 @@ window.music.samplePlayer.init();
       $body = $('body'),
       $songSample = $('#song-sample');
 
-  function storeAnswer(id) {
-    answer = parseInt(id, 10);
+  function storeAnswer(data) {
+    console.log(data);
+    answer = data;
+  }
+
+  function getAnswer() {
+    return data;
   }
 
   function checkAnswerCorrect(id) {
-    console.log(id, answer);
-    return (parseInt(id, 10) === answer);
+    return (parseInt(id, 10) === parseInt(answer.id, 10));
   }
 
   function init() {
