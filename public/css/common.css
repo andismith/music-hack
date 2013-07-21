@@ -586,6 +586,10 @@ body {
   font-smoothing: antialiased;
 }
 
+img {
+  display: block;
+}
+
 /* base styles */
 
 .page {
