@@ -2,11 +2,14 @@
     "use strict";
 
     var express = require('express'),
+    	app = express(),
         path = require('path'),
-        http = require('http'),
-        app = express(),
+        http = require('http'),        
         handlebarsLayout = require('handlebars'),
         engines = require('consolidate'),
+        server = http.createServer(app),
+        // io = require('socket.io').listen(server),
+        // socketio = require('./bin/socket-io/script')(io),  
 
         // Global Application settings
         AppConfig = require('./bin/config/app_config');
@@ -26,8 +29,12 @@
 			app.use(app.router);
 		});
 
-		http.createServer(app).listen(app.get('port'), function () {
+		server.listen(app.get('port'), function () {
 			console.log("Express server listening on port " + app.get('port'));
 		});
+
+		// http.createServer(app).listen(app.get('port'), function () {
+		// 	console.log("Express server listening on port " + app.get('port'));
+		// });
 	}
 }());

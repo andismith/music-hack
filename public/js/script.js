@@ -129,6 +129,12 @@ window.music.samplePlayer.init();
   // Select an answer
   function selectAnswer(e) {
       e.preventDefault();
+
+      var socket = io.connect();
+      socket.emit('initChannel', 'tom');
+      socket.on('update_position', function (data) {
+        console.log('my name is: ' + data);
+      });
       $(e.target).addClass('selected');
   }
 
@@ -312,6 +318,9 @@ window.music.samplePlayer.init();
   function init() {
 
     window.music.pages.init();
+
+    
+    //var socket = io.connect();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }

@@ -1,22 +1,37 @@
-module.exports = (function () {
-  "use strict";
+(function () {
+    'use strict';
 
-  var io = require('socket.io').listen(8080),
-    fs = require('fs'),
-    channelId = 0;
+    module.exports = function (io) {
 
-  io.configure(function () { 
-    io.set("transports", ["xhr-polling"]); 
-    io.set("polling duration", 10); 
-  });
+      var fs = require('fs'),
+        channelId = 0;
 
-  io.sockets.on('connection', function (socket) {
+      io.configure(function () { 
+        io.set("transports", ["xhr-polling"]); 
+        io.set("polling duration", 10); 
+      });
 
-    socket.on('initChannel', function(id) {
-      console.log(id + 'init channel');
-      channelId = id;
-    });
+      // io.sockets.on('connection', function (socket) {
+      //   socket.emit('update_position', lastPosition);
+      //   socket.on('receive_position', function (data) {
+      //      lastPosition = data;
+      //      socket.broadcast.emit('update_position', data); // send `data` to all other clients
+      //   });
+      // });
 
-  });
+      var id = 'Hacker'; // whatever default data
 
-})();
+      io.sockets.on('connection', function (socket) {
+
+        
+        socket.emit('update_position', id);
+
+        socket.on('initChannel', function(id) {
+          id = id;
+          socket.broadcast.emit('update_position', id); // send `data` to all other clients
+        });
+
+      });
+    }
+
+}());
