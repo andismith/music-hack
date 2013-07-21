@@ -1,7 +1,7 @@
 var redis = require('../../bin/data_access/redis');
 
+/*
 describe("Writing to Redis", function(){
-	/*
 	var SCREEN_NAME = "My Name",
 		SCORE = 123456,
 		TIMESTAMP = 'timestamp',
@@ -37,4 +37,5 @@ describe("Writing to Redis", function(){
 			expect(email).toMatch(EMAIL);
 	    });
 	});
-*/});
+});
+*/
