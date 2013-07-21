@@ -170,7 +170,6 @@ window.music = window.music || {};
     }
 
     showQuestion();
-
   }
 
   function initEventHandlers() {
