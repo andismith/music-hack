@@ -161,10 +161,10 @@ window.music = window.music || {};
   // Select an answer
   function selectAnswer(e) {
       e.preventDefault();
-      var $options = $('.answer-options').find('a');
+      var $answers = $('.answer-options').find('li');
 
-      $options.removeClass('selected');
-      $(e.target).addClass('selected');
+      $answers.removeClass('selected').addClass('disabled').find('a').off('click');
+      $(e.target).parent('li').removeClass('disabled').addClass('selected');
   }
 
   function activate() {
@@ -172,18 +172,18 @@ window.music = window.music || {};
       init();
     }
 
+    initEventHandlers();
     showQuestion();
   }
 
   function initEventHandlers() {
     var $answers = $('.answer-options');
 
-    $answers.on('click', 'a', selectAnswer);
+    $answers.one('click', 'a', selectAnswer);
   }
 
   function init() {
     initComplete = true;
-    initEventHandlers();
   }
 
   question.activate = activate;
