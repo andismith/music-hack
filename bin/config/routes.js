@@ -18,7 +18,8 @@
 
     module.exports = function(app) {
 
-    	var selectedTrackResultTest;
+    	var selectedTrackResultTest,
+            answerId;
 
         app.get('/', function(req, res) {
             res.render('index');
@@ -37,9 +38,10 @@
         });
 
         app.get('/getAnswer/:id', function(req, res) {      	
-        	
+        	answerId = req.params.id;
+            console.log(answerId);
         	if(typeof selectedTrackResult === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
         		
         	} else {
         		res.send(selectedTrackResult);
@@ -76,7 +78,7 @@
 
         function correctSongDetails(track) {
         	if(typeof track === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(req.params.id, correctSongDetails);
+        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
         	} else {
 	        	selectedTrack = track;
 	        	var parsedResult = JSON.parse(selectedTrack),

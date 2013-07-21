@@ -59,5 +59,4 @@ module.exports = (function(){
 		findScore: findScore,
 		leaderboard: leaderboard
 	};
-
 }());
