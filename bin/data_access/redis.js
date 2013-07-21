@@ -8,7 +8,9 @@ module.exports = (function(){
 		client.ZADD(config.AppConfig.Redis.leaderboard, score, username, function(err) {
 			util.handleError(err);
 			client.quit();
-			callback();
+			util.safeCallback(function() {
+				callback();
+			});
 		});
 	}
 	
