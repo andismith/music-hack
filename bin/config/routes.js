@@ -26,7 +26,7 @@
         app.get('/getQuestion', function(req, res) {
             var parsedResults = JSON.parse(songsSearchResults),
                 tracks = selectRandomTracks(parsedResults.tracklist),
-                selected = getSelectedTrack(tracks),
+                selected = getSelectedTrackId(tracks),
                 result = {
                     selected: selected,
                     results: tracks

@@ -49,7 +49,8 @@
 
       <section class="page" data-page-id="loading">
         <ul class="countdown">
-          <li class="loading current">Loading...</li>
+          <li class="loading current">Loading...
+            <img src="/img/load.gif" /></li>
           <li class="count-3">3</li>
           <li class="count-2">2</li>
           <li class="count-1">1</li>
@@ -73,9 +74,9 @@
       <section class="page" data-page-id="answerCorrect">
       
         <h2 class="correct">Correct!</h2>
-        <p class="intro">Your Score: 5</p>
+        <p class="intro">Your Score: <span class="score">5</span></p>
         <div class="answer" data-icon="check-inverted">
-          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
+          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" class="thumbail" />
           <p class="artist">Beyonc&eacute;</p>
           <p class="song">All the single ladies</p>  
           <a href="#" class="buy">Buy Song</a>     
@@ -86,10 +87,10 @@
       <section class="page" data-page-id="answerWrong">
       
         <h2 class="incorrect">Incorrect!</h2>
-        <p class="intro">Your Score: 5</p>
+        <p class="intro">Your Score: <span class="score">5</span></p>
 
         <div class="answer" data-icon="check-inverted">
-          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
+          <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" class="thumbail" />
           <p class="artist">Beyonc&eacute;</p>
           <p class="song">All the single ladies</p>  
           <a href="#" class="buy">Buy Song</a>     
@@ -158,7 +159,6 @@
     </div>
       
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/fittext.js"></script>
     <script src="/js/script.js"></script>
   </body>
