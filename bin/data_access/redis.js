@@ -5,7 +5,7 @@ module.exports = (function(){
 
 	function addScore(username, score, callback) {
 		var client = redis.createClient(config.AppConfig.Redis.port, config.AppConfig.Redis.host);
-		client.ZADD("leaderboard", score, username, function(err) {
+		client.ZADD(config.AppConfig.Redis.leaderboard, score, username, function(err) {
 			util.handleError(err);
 			client.quit();
 			callback();
@@ -14,7 +14,7 @@ module.exports = (function(){
 	
 	function findScore(username, callback) {
 		var client = redis.createClient(config.AppConfig.Redis.port, config.AppConfig.Redis.host);
-		client.ZSCORE("leaderboard", username, function(err, score) {
+		client.ZSCORE(config.AppConfig.Redis.leaderboard, username, function(err, score) {
 			util.handleError(err);
 			client.quit();
 			util.safeCallback(function() {

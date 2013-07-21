@@ -22,12 +22,11 @@ describe("Writing to Redis", function(){
 		
 		waitsFor(function(){
 			return flag;
-		}, 'the correct records should be returned', 50);
+		}, 'the correct records should be returned', 5000);
 		
 		// Then
 		runs(function() {
 			expect(highScore).toMatch(scoreToAdd);
 	    });
 	});
-
 });
