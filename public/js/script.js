@@ -1,63 +1,80 @@
 window.music = window.music || {};
 
-(function (samplePlayer, undefined) {
+(function(score) {
 
-  'use strict';
+  var hiScore = 0,
+      totalScore = 0,
+      $score = $('.score-board .score'),
+      $hiScore = $('.score-board .hi-score');
 
-  var SAMPLE_URL = 'http://api.ent.nokia.com/1.x/gb/products/47560659/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A';
-
-  var sampleBuffer = null,
-    context = {};
-
-  function onError(error) {
-    console.log(error);
+  function getTotal() {
+    return totalScore;
   }
 
-  function loadSound(url) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.responseType = 'arraybuffer';
-
-    // Decode asynchronously
-    request.onload = function() {
-      context.decodeAudioData(request.response, function(buffer) {
-        sampleBuffer = buffer;
-        playSound(sampleBuffer);
-      }, onError);
-    };
-
-    request.send();
+  function getHiScore() {
+    if (totalScore > hiScore) {
+      hiScore = totalScore;
+    }
+    return hiScore;
   }
 
-  // Play sound
-  function playSound(buffer) {
-    var source = context.createBufferSource(); // creates a sound source
-    source.buffer = buffer;                    // tell the source which sound to play
-    source.connect(context.destination);       // connect the source to the context's destination (the speakers)
-    source.start(0);                           // play the source now
+  function addToTotal(value) {
+    totalScore += parseInt(value, 10);
   }
 
-  
-
-  // Init any included plugins
-  function initPlugins() {
-    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
+  function setTotal(value) {
+    totalScore = parseInt(value, 10);
   }
 
-  // Init
-  function init() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    context = new AudioContext();
-
-    initPlugins();
-    //loadSound(SAMPLE_URL);
+  function updateScoreBar() {
+    $score.text(getTotal());
+    $hiScore.text(getHiScore());
   }
 
-  samplePlayer.init = init;
+  score.updateScoreBar = updateScoreBar;
+  score.getTotal = getTotal;
+  score.addToTotal = addToTotal;
+  score.setTotal = setTotal;
 
-}(window.music.samplePlayer = window.music.samplePlayer || {}));
+}(window.music.score = window.music.score || {}));
 
-window.music.samplePlayer.init();
+(function(rounds) {
+
+  var TOTAL_ROUNDS = 5;
+
+  var currentRound = 1,
+      $round = $('.score-board .round'),
+      $totalRounds = $('.score-board .total-rounds');
+
+  function getRound() {
+    return currentRound;
+  }
+
+  function getTotalRound() {
+    return TOTAL_ROUNDS;
+  }
+
+  function incrementRound() {
+    currentRound++;
+    return (currentRound < TOTAL_ROUNDS);
+  }
+
+  function setRound(value) {
+    currentRound = parseInt(value, 10);
+  }
+
+  function updateRound() {
+    $round.text(getRound());
+    $totalRounds.text(getTotalRound());
+  }
+
+  rounds.updateRound = updateRound;
+  rounds.getRound = getRound;
+  rounds.getTotalRound = getTotalRound;
+  rounds.incrementRound = incrementRound;
+  rounds.setRound = setRound;
+
+}(window.music.rounds = window.music.rounds || {}));
 
 (function(animation, $) {
 
@@ -82,6 +99,8 @@ window.music.samplePlayer.init();
 })(window.music.animation = window.music.animation || {}, jQuery);
 
 (function(question, $) {
+  var QUESTION_LENGTH = 10000;
+
   var initComplete = false,
       $container = $('.container'),
       $goButton = $('.go'),
@@ -99,21 +118,34 @@ window.music.samplePlayer.init();
 
     setTimeout(function(){
       $timer.find('span').css('background-color', '#F39C12');
-    }, 1000);
+    }, QUESTION_LENGTH/10);
 
     setTimeout(function(){
       $timer.find('span').css('background-color', '#E74C3C');
-    }, 2000);
+    }, QUESTION_LENGTH/5);
 
-    setTimeout(endQuestion, 10000);
+    setTimeout(function() {
+      $timer.removeClass('start').find('span').css('background-color','');
+      $timer.parent('.remaining').hide();
+      endQuestion();
+    }, QUESTION_LENGTH);
   }
 
   function endQuestion() {
     var $selected = $('.answer-options').find('.selected');
 
-    if ($selected.length > 0 && window.music.checkAnswerCorrect($selected.data('music-id'))) {
+    $songSample.get(0).pause();
+
+    if ($selected.length === 0) {
+
+      window.music.pages.navigateTo('answerWrong');
+
+    } else if (window.music.checkAnswerCorrect($selected.data('music-id'))) {
+
+      window.music.score.addToTotal(10);
       window.music.pages.navigateTo('answerCorrect');
     } else {
+      window.music.score.addToTotal(-5);
       window.music.pages.navigateTo('answerWrong');
     }
   }
@@ -121,7 +153,7 @@ window.music.samplePlayer.init();
   function showQuestion() {
     window.music.animation.handleAnimation('.answer-options li', true);
     $songSample.get(0).play();
-    $('.answer-options').find('li').last().on('transitionend', function(){
+    $('.answer-options').find('li').last().one('transitionend', function(){
       startTimer();
     });
   }
@@ -130,11 +162,9 @@ window.music.samplePlayer.init();
   function selectAnswer(e) {
       e.preventDefault();
 
-      var socket = io.connect();
-      socket.emit('initChannel', 'tom');
-      socket.on('update_position', function (data) {
-        console.log('my name is: ' + data);
-      });
+      var $options = $('.answer-options').find('a');
+
+      $options.removeClass('selected');
       $(e.target).addClass('selected');
   }
 
@@ -144,7 +174,6 @@ window.music.samplePlayer.init();
     }
 
     showQuestion();
-
   }
 
   function initEventHandlers() {
@@ -171,6 +200,18 @@ window.music.samplePlayer.init();
     if (!initComplete) {
       init();
     }
+
+    window.music.rounds.incrementRound();
+
+    setTimeout(function() {
+      if (window.music.rounds.getRound() > window.music.rounds.getTotalRound()) {
+        window.music.rounds.setRound(0);
+        window.music.pages.navigateTo('leaderboard');
+      } else {
+          window.music.pages.navigateTo('loading');
+      }
+    }, 4000);
+
   }
 
   function init() {
@@ -183,6 +224,8 @@ window.music.samplePlayer.init();
 
 })(window.music.answer = window.music.answer || {}, jQuery);
 
+window.music.answerCorrect = window.music.answer;
+window.music.answerWrong = window.music.answer;
 
 (function(loading, $) {
 
@@ -207,6 +250,8 @@ window.music.samplePlayer.init();
         countdown(++i);
       }, 500);
     } else {
+      $countdown.removeClass('current');
+      $countdown.eq(0).addClass('current');
       window.music.pages.navigateTo('question');
     }
   }
@@ -226,7 +271,7 @@ window.music.samplePlayer.init();
   }
 
   function loadAudio(data) {
-    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected + AUDIO_URL_SUFFIX);
+    music.$songSample.prop('src', AUDIO_URL_PREFIX + data.selected.id + AUDIO_URL_SUFFIX);
     music.$songSample.get(0).load();
     music.$songSample.one('loadeddata', function() {
       countdown(0);
@@ -259,6 +304,67 @@ window.music.samplePlayer.init();
 
 })(window.music.loading = window.music.loading || {}, jQuery);
 
+(function(index, $) {
+
+  var initComplete = false,
+      $name = $('#name');
+
+  function loadName() {
+    if (Modernizr.localstorage) {
+      return localStorage['name'];
+    }
+  }
+
+  function saveName(name) {
+    if (Modernizr.localstorage) {
+      localStorage['name'] = name;
+    }
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    window.music.score.setTotal(0);
+    $name.val(loadName());
+  }
+
+  function initEventHandlers() {
+    var $form = $('.user-form');
+
+    $name.on('keyup', function(e) {
+      if (e.target.value.length > 0) {
+        $(e.target).removeClass('error');
+      }
+    });
+
+    $form.on('submit', function(e) {
+      $form.find('.navigate').trigger('click');
+      return false;
+    });
+
+    $form.on('click', '.navigate', function(e) {
+      e.preventDefault();
+      if ($name.get(0).checkValidity()) {
+        saveName($name.val());
+      } else {
+        e.stopPropagation();
+        $name.addClass('error');
+      }
+    });
+  }
+
+  function init() {
+    initComplete = true;
+    initEventHandlers();
+  }
+
+  index.activate = activate;
+  index.init = init;
+
+})(window.music.index = window.music.index || {}, jQuery);
+
 /* page handler */
 (function(pages, $) {
 
@@ -279,6 +385,9 @@ window.music.samplePlayer.init();
     
     oldPage.removeClass('active');
     newPage.addClass('active');
+
+    window.music.score.updateScoreBar();
+    window.music.rounds.updateRound();
 
     activatePage(pageName);
   }
@@ -306,18 +415,23 @@ window.music.samplePlayer.init();
       $body = $('body'),
       $songSample = $('#song-sample');
 
-  function storeAnswer(id) {
-    answer = parseInt(id, 10);
+  function storeAnswer(data) {
+    console.log(data);
+    answer = data;
+  }
+
+  function getAnswer() {
+    return data;
   }
 
   function checkAnswerCorrect(id) {
-    console.log(id, answer);
-    return (parseInt(id, 10) === answer);
+    return (parseInt(id, 10) === parseInt(answer.id, 10));
   }
 
   function init() {
 
     window.music.pages.init();
+    window.music.index.activate();
 
     
     //var socket = io.connect();

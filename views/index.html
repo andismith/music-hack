@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/css/common.css" />
    
     <script src="/js/libs/modernizr-2.6.2.js"></script>
+
     <script>
       var channelId = '{{ channelId }}';
     </script>
@@ -33,19 +34,14 @@
       <audio id="song-sample" src="about:blank"></audio>
 
       <section class="page active" data-page-id="index">
-
-        <div class="overlay">
-          <p>Please make sure your sound is not on mute!!</p>
-        </div>
-
         <div class="intro">
           <p>Take off the headphones, turn down the radio and put your music trivia knowledge to the test using MusicMatch.</p>
 
           <p>Play on your own and try to gain a place on our global leaderboard, or invite your friends. It's entirely up to you!</p>
         </div>
 
-        <form action="/play">
-          <input type="text" class="name" placeholder="Enter your name..." required />
+        <form class="user-form" action="/loading">
+          <input type="text" id="name" class="name" placeholder="Enter your name..." required />
           <a href="/loading" class="navigate button">Play</a>
         </form>
 
@@ -53,7 +49,7 @@
 
       <section class="page" data-page-id="loading">
         <ul class="countdown">
-          <li class="loading current">Loading</li>
+          <li class="loading current">Loading...</li>
           <li class="count-3">3</li>
           <li class="count-2">2</li>
           <li class="count-1">1</li>
@@ -76,31 +72,91 @@
 
       <section class="page" data-page-id="answerCorrect">
       
-        <h2>Correct!</h2>
-        <p>Your Score: 5</p>
-        <div class="answer">
+        <h2 class="correct">Correct!</h2>
+        <p class="intro">Your Score: 5</p>
+        <div class="answer" data-icon="check-inverted">
           <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
           <p class="artist">Beyonc&eacute;</p>
-          <p class="song">All the single ladies</p>       
-        </div>
+          <p class="song">All the single ladies</p>  
+          <a href="#" class="buy">Buy Song</a>     
+        </d§v>
 
       </section>
 
       <section class="page" data-page-id="answerWrong">
       
-        <h2>Wrong!</h2>
-        <p>Your Score: 5</p>
-        <div class="answer">
+        <h2 class="incorrect">Incorrect!</h2>
+        <p class="intro">Your Score: 5</p>
+
+        <div class="answer" data-icon="check-inverted">
           <img src="http://download.ch1.vcdn.nokia.com/p/d/music_image/100x100/300987.jpg" />
           <p class="artist">Beyonc&eacute;</p>
-          <p class="song">All the single ladies</p>       
+          <p class="song">All the single ladies</p>  
+          <a href="#" class="buy">Buy Song</a>     
         </div>
 
       </section>
 
+      <section class="page" data-page-id="leaderboard">
+        <h2>Leaderboard</h2>
+
+        <table class="leaderboard">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>1.</td>
+              <td>Abid</td>
+              <td>365</td>
+            </tr>
+
+            <tr>
+              <td>2.</td>
+              <td>Tom</td>
+              <td>240</td>
+            </tr>
+
+            <tr>
+              <td>3.</td>
+              <td>Chris</td>
+              <td>180</td>
+            </tr>
+
+            <tr>
+              <td>4.</td>
+              <td>Andy</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <a href="/index" class="button navigate">Play Again</a>
+      </section>
+
+      <footer>
+        <ul class="score-board">
+          <li>
+            <strong>Score:</strong>
+            <span class="score">0</span>
+          </li>
+          <li>
+            <strong>Round:</strong>
+            <span class="round">0</span>/<span class="total-rounds">0</span>
+          </li>
+          <li>
+            <strong>Hi-Score:</strong>
+            <span class="hi-score">0</span>
+          </li>
+        </ul>
+      </footer>
     </div>
       
-
     <script src="/js/libs/jquery-1.10.2.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/fittext.js"></script>

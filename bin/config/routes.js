@@ -24,7 +24,7 @@
         app.get('/getQuestion', function(req, res) {
             var parsedResults = JSON.parse(songsSearchResults),
                 tracks = selectRandomTracks(parsedResults.tracklist),
-                selected = getSelectedTrackId(tracks),
+                selected = getSelectedTrack(tracks),
                 result = {
                     selected: selected,
                     results: tracks
@@ -58,9 +58,11 @@
             res.render('answer');
         });
 
+
         function getSelectedTrackId(tracks) {
+
             var randomNumber = Math.floor((Math.random() * tracks.length));
-            return tracks[randomNumber].id;
+            return tracks[randomNumber];
         }
 
         function pickRandomId(results) {
@@ -121,7 +123,6 @@
             return arr;
         }
 
-
         function randomiseArray(array) {
             var currentIndex = array.length,
                 temporaryValue,
@@ -142,8 +143,6 @@
 
             return array;
         }
-
-             
 
     };
 }());
