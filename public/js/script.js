@@ -160,7 +160,9 @@ window.music = window.music || {};
   // Select an answer
   function selectAnswer(e) {
       e.preventDefault();
-      $('.answer-options').find('a').removeClass('selected');
+      var $options = $('.answer-options').find('a');
+
+      $options.removeClass('selected');
       $(e.target).addClass('selected');
   }
 
