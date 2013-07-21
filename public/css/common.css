@@ -598,12 +598,17 @@ body {
 
 .page.active {
   display: block;
+  min-height: 400px;
 }
 
 .container {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+}
+
+header {
+  border-bottom: solid 1px #333;
 }
 
 h1 {
@@ -835,6 +840,29 @@ h2 {
   clear: right;
   width: 175px;
   margin: 0 0 10px;
+}
+
+.score-board {
+  border-top: solid 1px #333;
+  list-style-type: none;
+  margin: 20px 0 0;
+  overflow: hidden;
+  padding: 0;
+  width: auto;
+}
+
+.score-board li {
+  float: left;
+  padding-top: 10px;
+  text-align: center;
+  width: 33.3%;
+}
+
+.score-board strong {
+  color: #bbb;
+  display: block;
+  font-weight: 500;
+  padding-bottom: 10px;
 }
 
 /*# sourceMappingURL=common.css.map */
