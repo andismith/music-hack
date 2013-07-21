@@ -147,7 +147,6 @@ window.music.samplePlayer.init();
     }
 
     showQuestion();
-
   }
 
   function initEventHandlers() {
@@ -176,7 +175,7 @@ window.music.samplePlayer.init();
     }
 
     setTimeout(function() {
-      window.music.pages.navigateTo('loading');
+      //window.music.pages.navigateTo('loading');
     }, 4000);
   }
 

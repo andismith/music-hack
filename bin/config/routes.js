@@ -39,6 +39,10 @@
             res.render('answer');
         });
 
+        app.get('/leaderboard', function (req, res) {
+            res.render('leaderboard');
+        });
+
         function getSelectedTrack(tracks) {
             console.log(tracks);
             var randomNumber = Math.floor((Math.random() * tracks.length));
@@ -86,7 +90,6 @@
             return arr;
         }
 
-
         function randomiseArray(array) {
             var currentIndex = array.length,
                 temporaryValue,
@@ -112,7 +115,7 @@
             var length = results.length;
             var randomNumber = Math.floor((Math.random()*length));
             return results[randomNumber].id;
-        }     
+        }
 
     };
 }());
