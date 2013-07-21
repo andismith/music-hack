@@ -110,6 +110,11 @@ h2 {
     display: block;
 }
 
+.loader {
+    display: block;
+    margin: 0 auto;
+}
+
 .question {
     display: none;
 }
@@ -194,6 +199,15 @@ h2 {
         opacity: 0;
         transform: translateX(-100%);
 
+        &.selected a {
+            background: $green;
+            transform: scale(1.05);
+        }
+
+        &.selected a:after {
+            display: block;
+        }
+
         a {
             position: relative;
             display: block;
@@ -208,9 +222,9 @@ h2 {
             text-align: center;
             background: $blue;
             border-radius: 3px;
+            transition: transform 0.3s ease;
 
-            &:hover,
-            &.selected {
+            &:hover {
                 background: $green;
             }
 
@@ -222,10 +236,20 @@ h2 {
                 right: 20px;
             }
 
-            &:hover:after,
-            &.selected:after {
+            &:hover:after {
                 display: block;
             }
+        }
+
+        &.disabled a {
+            &:after {
+                display: none;
+            }
+
+            cursor: default;
+            opacity: 0.5;
+            background: $blue;
+            transform: scale(0.95);
         }
     }
 }

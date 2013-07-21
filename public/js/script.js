@@ -162,10 +162,9 @@ window.music = window.music || {};
   function selectAnswer(e) {
       e.preventDefault();
 
-      var $options = $('.answer-options').find('a');
-
-      $options.removeClass('selected');
-      $(e.target).addClass('selected');
+      var $answers = $('.answer-options').find('li');
+      $answers.removeClass('selected').addClass('disabled').find('a').off('click');
+      $(e.target).parent('li').removeClass('disabled').addClass('selected');
   }
 
   function activate() {
@@ -173,18 +172,18 @@ window.music = window.music || {};
       init();
     }
 
+    initEventHandlers();
     showQuestion();
   }
 
   function initEventHandlers() {
     var $answers = $('.answer-options');
 
-    $answers.on('click', 'a', selectAnswer);
+    $answers.one('click', 'a', selectAnswer);
   }
 
   function init() {
     initComplete = true;
-    initEventHandlers();
   }
 
   question.activate = activate;
@@ -456,9 +455,6 @@ window.music.answerWrong = window.music.answer;
 
     window.music.pages.init();
     window.music.index.activate();
-
-    
-    //var socket = io.connect();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
