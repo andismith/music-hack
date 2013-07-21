@@ -643,6 +643,11 @@ h2 {
   border-radius: 3px;
 }
 
+.name.error {
+  -webkit-box-shadow: 0 0 0 3px #d9534f;
+  box-shadow: 0 0 0 3px #d9534f;
+}
+
 /* questions */
 
 .loading {

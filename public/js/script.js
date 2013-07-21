@@ -269,6 +269,66 @@ window.music.answerWrong = window.music.answer;
 
 })(window.music.loading = window.music.loading || {}, jQuery);
 
+(function(index, $) {
+
+  var initComplete = false,
+      $name = $('#name');
+
+  function loadName() {
+    if (Modernizr.localstorage) {
+      return localStorage['name'];
+    }
+  }
+
+  function saveName(name) {
+    if (Modernizr.localstorage) {
+      localStorage['name'] = name;
+    }
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+
+    $name.val(loadName());
+  }
+
+  function initEventHandlers() {
+    var $form = $('.user-form');
+
+    $name.on('keyup', function(e) {
+      if (e.target.value.length > 0) {
+        $(e.target).removeClass('error');
+      }
+    });
+
+    $form.on('submit', function(e) {
+      $form.find('.navigate').trigger('click');
+      return false;
+    });
+
+    $form.on('click', '.navigate', function(e) {
+      e.preventDefault();
+      if ($name.get(0).checkValidity()) {
+        saveName($name.val());
+      } else {
+        e.stopPropagation();
+        $name.addClass('error');
+      }
+    });
+  }
+
+  function init() {
+    initComplete = true;
+    initEventHandlers();
+  }
+
+  index.activate = activate;
+  index.init = init;
+
+})(window.music.index = window.music.index || {}, jQuery);
+
 /* page handler */
 (function(pages, $) {
 
@@ -332,6 +392,7 @@ window.music.answerWrong = window.music.answer;
   function init() {
 
     window.music.pages.init();
+    window.music.index.activate();
 
     $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }

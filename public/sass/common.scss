@@ -89,6 +89,10 @@ h2 {
     font-size: 20px;
     text-align: center;
     border-radius: 3px;
+
+    &.error {
+        box-shadow: 0 0 0 3px #d9534f;
+    }
 }
 
 /* questions */
