@@ -586,6 +586,10 @@ body {
   font-smoothing: antialiased;
 }
 
+img {
+  display: block;
+}
+
 /* base styles */
 
 .page {
@@ -657,6 +661,11 @@ h2 {
 
 .loading {
   display: block;
+}
+
+.loader {
+  display: block;
+  margin: 0 auto;
 }
 
 .question {
