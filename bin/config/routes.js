@@ -8,7 +8,7 @@
         config = require('../config/app_config'),
         songsSearchResults,
         selectedTrack,
-        selectedTrackResult;
+        response;
 
     new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
@@ -18,7 +18,7 @@
 
     module.exports = function(app) {
 
-    	var selectedTrackResultTest,
+    	var selectedTrackResult = {},
             answerId;
 
         app.get('/', function(req, res) {
@@ -38,14 +38,14 @@
             res.send(result);
         });
 
-        app.get('/getAnswer/:id', function(req, res) {      	
+        app.get('/getAnswer/:id', function(req, res) {
         	answerId = req.params.id;
-            console.log(answerId);
-        	if(typeof selectedTrackResult === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
-        		
-        	} else {
-        		res.send(selectedTrackResult);
+            response = res;
+        	if(Object.keys(selectedTrackResult).length === 0) {
+        		//new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
+        		getSongDetails(answerId);
+        	} else {        		
+                selectedTrackResult = {}
         	}
         });
 
@@ -77,9 +77,14 @@
             return results[randomNumber].id;
         }
 
-        function correctSongDetails(track) {
+        function getSongDetails(answerId){
+            new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
+        }
+
+        function correctSongDetails(id, track) {
         	if(typeof track === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
+        		//new nokiaAPI.NokiaMusic().getSongDetails(id, correctSongDetails);
+                getSongDetails(id);
         	} else {
 	        	selectedTrack = track;
 	        	var parsedResult = JSON.parse(selectedTrack),
@@ -88,8 +93,8 @@
 	        			from: parsedResult['takenfrom']['name'],
 	        			image: parsedResult['thumbnails']['100x100']
 	        		};
-
-	        	selectedTrackResult = result;
+                
+                response.send(result);	        	
 	        }
         }
 
