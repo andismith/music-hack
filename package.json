@@ -10,18 +10,18 @@
     "grunt-contrib-watch": "~0.4.4",
     "grunt-jsonlint": "~1.0.0",
     "matchdep": "~0.1.2",
-    "grunt-contrib-jasmine": "~0.5.1",
+    "nodemon": "~0.7.8"
+  },
+  "dependencies": {
     "express": "~3.3.4",
     "socket.io": "~0.9.16",
     "mongodb": "~1.3.12",
     "handlebars": "~1.0.12",
     "consolidate": "~0.9.1",
+    "grunt-contrib-jasmine": "~0.5.1",
     "jasmine-node": "~1.10.2",
     "redis": "~0.8.4",
-    "pusher": "~0.1.3"
-  },
-  "dependencies": {
-    "nodemon": "~0.7.8",
+    "pusher": "~0.1.3",
     "request": "~2.22.0"
   }
 }
