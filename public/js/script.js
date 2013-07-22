@@ -214,24 +214,27 @@ window.music = window.music || {};
     })
     .done(function(data) {
       var $answer = $('.answer');
-      $answer.find('.song').html(data.name);
-      $answer.find('.artist').html(data.from);
-      $answer.find('.thumbnail').prop('src', data.image);
+
+      $answer
+      .find('.song').html(data.name)
+      .find('.artist').html(data.from)
+      .find('.thumbnail').prop('src', data.image);
       $answer.show();
     });
   }
 
   function activate() {
-    var $score = $('.intro .score');
+    var $score = $('.intro .score'),
+        $answer = $('.answer');
 
     if (!initComplete) {
       init();
     }
 
-    $('.answer').hide();
+    $answer.hide();
 
     getAnswer(window.music.getAnswer().id);
-    
+
     $score.text(window.music.score.getTotal());
 
     window.music.rounds.incrementRound();
@@ -445,7 +448,6 @@ window.music.answerWrong = window.music.answer;
       $songSample = $('#song-sample');
 
   function storeAnswer(data) {
-    console.log(data);
     answer = data;
   }
 
@@ -458,11 +460,12 @@ window.music.answerWrong = window.music.answer;
   }
 
   function init() {
+    var $h1 = $('h1');
 
     window.music.pages.init();
     window.music.index.activate();
 
-    $('h1').fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
+    $h1.fitText(1.2, { minFontSize: '38px', maxFontSize: '70px' });
   }
 
   music.$songSample = $songSample;
@@ -472,6 +475,5 @@ window.music.answerWrong = window.music.answer;
   music.init = init;
 
 })(window.music = window.music || {}, jQuery);
-
 
 window.music.init();
