@@ -208,9 +208,12 @@ window.music = window.music || {};
   }
 
   function getAnswer(id) {
-    $.ajax('/getAnswer/' + id)
+    $.ajax({
+      url: '/getAnswer/' + id,
+      cache: false
+    })
     .done(function(data) {
-      debugger;
+      console.log(data)
       var $answer = $('.answer');
       $answer.find('.song').html(data.name);
       $answer.find('.artist').html(data.from);
@@ -305,9 +308,12 @@ window.music.answerWrong = window.music.answer;
   function loadQuestion() {
     $.ajax('/getQuestion')
     .done(function(data) {
+
       loadAudio(data);
       populateAnswers(data);
       window.music.storeAnswer(data.selected);
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR, textStatus, errorThrown);
     });
   }
 

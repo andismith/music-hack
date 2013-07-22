@@ -8,7 +8,7 @@
         config = require('../config/app_config'),
         songsSearchResults,
         selectedTrack,
-        selectedTrackResult;
+        selectedTrackResult = {};
 
     new nokiaAPI.NokiaMusic().getRandomSong(songsRetrieved);
 
@@ -39,12 +39,12 @@
 
         app.get('/getAnswer/:id', function(req, res) {      	
         	answerId = req.params.id;
-            console.log(answerId);
-        	if(typeof selectedTrackResult === 'undefined') {
-        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
-        		
+        	if(Object.keys(selectedTrackResult).length === 0) {
+        		//new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
+        		getSongDetails(answerId);
         	} else {
         		res.send(selectedTrackResult);
+        		selectedTrackResult = {};
         	}
         });
 
@@ -76,13 +76,15 @@
             return results[randomNumber].id;
         }
 
+        function getSongDetails(answerId){
+            new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
+        }
+
         function correctSongDetails(id, track) {
+        	console.log("track", track);
         	if(typeof track === 'undefined') {
-<<<<<<< HEAD
-        		new nokiaAPI.NokiaMusic().getSongDetails(id, correctSongDetails);
-=======
-        		new nokiaAPI.NokiaMusic().getSongDetails(answerId, correctSongDetails);
->>>>>>> fed41cd67e99f37b2e8431a4203b3958397cef30
+        		//new nokiaAPI.NokiaMusic().getSongDetails(id, correctSongDetails);
+                getSongDetails(id);
         	} else {
 	        	selectedTrack = track;
 	        	var parsedResult = JSON.parse(selectedTrack),
