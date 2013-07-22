@@ -81,13 +81,11 @@
         }
 
         function correctSongDetails(id, track) {
-        	console.log("track", track);
         	if(typeof track === 'undefined') {
         		//new nokiaAPI.NokiaMusic().getSongDetails(id, correctSongDetails);
                 getSongDetails(id);
         	} else {
 	        	selectedTrack = track;
-                console.log(selectedTrack);
 	        	var parsedResult = JSON.parse(selectedTrack),
 	        		result = {
 	        			name: parsedResult['name'],
