@@ -241,15 +241,14 @@ window.music = window.music || {};
 
   function getAnswer(id) {
     $.ajax({
-      url: '/getAnswer/' + id,
-      cache: false
+      url: '/getAnswer/' + id
     })
     .done(function(data) {
       var $answer = $('.answer');
      
       $answer.find('.song').html(data.name);
       $answer.find('.artist').html(data.from);
-      $answer.find('.thumbnail').prop('src', data.image);
+      $answer.find('.thumbnail').attr('src', data.image);
       $answer.show();
     });
   }
