@@ -269,9 +269,9 @@ window.music.answerWrong = window.music.answer;
         l = data.length,
         resultsHtml = '';
       for (i=0; i<l; i++) {
-        resultsHtml += '<tr><td>' + i+1 + '.</td>';
-        resultsHtml += '<td>' + data.name + '</td>';
-        resultsHtml += '<td>' + data.score + '</td></tr>';
+        resultsHtml += '<tr><td>' + (i+1) + '.</td>';
+        resultsHtml += '<td>' + escape(data[i].name.slice(0,12)).replace(/%20/g, ' ') + '</td>';
+        resultsHtml += '<td>' + data[i].score + '</td></tr>';
       }
       $leaderboard.find('.results').html(resultsHtml);
       $leaderboard.show();
