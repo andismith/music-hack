@@ -57,12 +57,16 @@
             res.render('answer');
         });
 
-        app.post('/addScore', function (req, res) {
+        app.post('/addScore/:user/:score', function (req, res) {
+            if (req.params && req.params.username && req.params.score) {
+                redis.addScore(req.params.username, req.params.score);
+            } else {
+                console.log('Missing value: u:' + req.params.username + ' s:' + req.params.score);
+            }
+        });
 
-            console.log(req);
-
-            //redis.addScore(username, score, )
-
+        app.post('/leaderboard', function (req, res) {
+            redis.leaderboard(10);
         });
 
         function getSelectedTrackId(tracks) {
