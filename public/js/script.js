@@ -102,13 +102,14 @@ window.music = window.music || {};
   var QUESTION_LENGTH = 10000;
 
   var initComplete = false,
+      newQuestion = false,
       $container = $('.container'),
       $goButton = $('.go'),
-      $songSample = $('#song-sample');
+      $songSample = $('#song-sample'),
+      $timer = $('.timer');
 
   // Start the timer
   function startTimer() {
-    var $timer = $('.timer');
 
     $timer.parent('.remaining').show();
 
@@ -125,8 +126,6 @@ window.music = window.music || {};
     }, QUESTION_LENGTH/5);
 
     setTimeout(function() {
-      $timer.removeClass('start').find('span').css('background-color','');
-      $timer.parent('.remaining').hide();
       endQuestion();
     }, QUESTION_LENGTH);
   }
@@ -134,24 +133,33 @@ window.music = window.music || {};
   function endQuestion() {
     var $selected = $('.answer-options').find('.selected a');
 
-    $songSample.get(0).pause();
+    if (newQuestion) {
+      newQuestion = false;
+      $songSample.get(0).pause();
 
-    if ($selected.length === 0) {
+      $timer.removeClass('start').find('span').css('background-color','');
+      $timer.parent('.remaining').hide();
 
-      window.music.pages.navigateTo('answerWrong');
+      if ($selected.length === 0) {
 
-    } else if (window.music.checkAnswerCorrect($selected.data('music-id'))) {
+        window.music.pages.navigateTo('answerWrong');
 
-      window.music.score.addToTotal(10);
-      window.music.pages.navigateTo('answerCorrect');
-    } else {
-      window.music.score.addToTotal(-5);
-      window.music.pages.navigateTo('answerWrong');
+      } else if (window.music.checkAnswerCorrect($selected.data('music-id'))) {
+
+        window.music.score.addToTotal(10);
+        window.music.pages.navigateTo('answerCorrect');
+      } else {
+        window.music.score.addToTotal(-5);
+        window.music.pages.navigateTo('answerWrong');
+      }
     }
   }
 
   function showQuestion() {
+    newQuestion = true;
+
     window.music.animation.handleAnimation('.answer-options li', true);
+    
     $songSample.get(0).play();
     $('.answer-options').find('li').last().one('transitionend', function(){
       startTimer();
@@ -165,6 +173,10 @@ window.music = window.music || {};
       var $answers = $('.answer-options').find('li');
       $answers.removeClass('selected').addClass('disabled').find('a').off('click');
       $(e.target).parent('li').removeClass('disabled').addClass('selected');
+
+      /*setTimeout(function() {
+        endQuestion();
+      }, 1000);*/
   }
 
   function activate() {
@@ -195,11 +207,31 @@ window.music = window.music || {};
 
   var initComplete = false;
 
+  function submitScore() {
+    $.ajax({
+      type: "POST",
+      url: '/addScore',
+      data: {
+        'name': $('#name'),
+        'score': window.music.score.getTotal()
+      }
+    })
+    .done(function() {
+      console.log('success');
+    })
+    .fail(function() {
+      console.log('fail');
+    })
+    .always(function() {
+      window.music.pages.navigateTo('leaderboard');
+    });
+  }
+
   function moveNext() {
     setTimeout(function() {
       if (window.music.rounds.getRound() > window.music.rounds.getTotalRound()) {
         window.music.rounds.setRound(0);
-        window.music.pages.navigateTo('leaderboard');
+        submitScore();
       } else {
         window.music.pages.navigateTo('loading');
       }
