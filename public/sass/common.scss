@@ -190,6 +190,16 @@ h2 {
     }
 }
 
+.button-secondary {
+    background: $grey;
+    font-size: 16px;
+    margin-top: 50px;
+
+    &:hover {
+        background: $greyDarker;
+    }
+}
+
 .answer-options {
     margin: 40px auto 0;
     padding: 0;
@@ -364,6 +374,13 @@ h2 {
     td {
         padding: 8px 16px;
     }
+}
+
+.load-error {
+    color: red;
+    display: none;
+    font-weight: bold;
+    text-align: center;
 }
 
 .score-board {

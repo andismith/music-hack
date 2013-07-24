@@ -41,9 +41,11 @@
         </div>
 
         <form class="user-form" action="/loading">
-          <input type="text" id="name" class="name" placeholder="Enter your name..." required />
+          <input type="text" id="name" name="username" class="name" placeholder="Enter your name..." maxlength="12" required />
           <a href="/loading" class="navigate button">Play</a>
         </form>
+
+        <a href="/leaderboard" class="navigate button button-secondary">Leaderboards</a>
 
       </section>
 
@@ -108,7 +110,7 @@
             </tr>
           </thead>
 
-          <tbody>
+          <tbody class="results">
             <tr>
               <td>1.</td>
               <td>Abid</td>
@@ -134,6 +136,8 @@
             </tr>
           </tbody>
         </table>
+
+        <p class="load-error">Unable to show leaderboard.</p>
 
         <a href="/index" class="button navigate">Play Again</a>
       </section>
