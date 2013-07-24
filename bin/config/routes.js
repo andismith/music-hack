@@ -65,7 +65,7 @@
             }
         });
 
-        app.post('/leaderboard', function (req, res) {
+        app.get('/leaderboard', function (req, res) {
             redis.leaderboard(10);
         });
 
