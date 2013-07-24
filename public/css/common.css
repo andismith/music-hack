@@ -742,6 +742,16 @@ h2 {
   background: #4cae4c;
 }
 
+.button-secondary {
+  background: #8f998f;
+  font-size: 16px;
+  margin-top: 50px;
+}
+
+.button-secondary:hover {
+  background: #788278;
+}
+
 .answer-options {
   margin: 40px auto 0;
   padding: 0;
@@ -929,6 +939,13 @@ h2 {
 .leaderboard th,
 .leaderboard td {
   padding: 8px 16px;
+}
+
+.load-error {
+  color: red;
+  display: none;
+  font-weight: bold;
+  text-align: center;
 }
 
 .score-board {

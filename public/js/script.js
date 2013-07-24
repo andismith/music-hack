@@ -256,6 +256,47 @@ window.music = window.music || {};
 window.music.answerCorrect = window.music.answer;
 window.music.answerWrong = window.music.answer;
 
+(function(leaderboard, $) {
+
+  var initComplete = false,
+    $leaderboard = $('.leaderboard');
+
+  function showLeaderboard() {
+    $leaderboard.hide();
+    $.ajax('/leaderboard')
+    .done(function(data) {
+      var i = 0,
+        l = data.length,
+        resultsHtml = '';
+      for (i=0; i<l; i++) {
+        resultsHtml += '<tr><td>' + i+1 + '.</td>';
+        resultsHtml += '<td>' + data.name + '</td>';
+        resultsHtml += '<td>' + data.score + '</td></tr>';
+      }
+      $leaderboard.find('.results').html(resultsHtml);
+      $leaderboard.show();
+    })
+    .fail(function() {
+      $('.load-error').show();
+    });
+  }
+
+  function activate() {
+    if (!initComplete) {
+      init();
+    }
+    showLeaderboard();
+  }
+
+  function init() {
+    initComplete = true;
+  }
+
+  leaderboard.activate = activate;
+  leaderboard.init = init;
+
+}(window.music.leaderboard = window.music.leaderboard || {}, jQuery));
+
 (function(loading, $) {
 
   var AUDIO_URL_PREFIX = 'http://api.ent.nokia.com/1.x/gb/products/',
