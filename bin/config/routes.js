@@ -3,7 +3,8 @@
 (function () {
     'use strict';
 
-    var nokiaAPI = require('../nokia-api/stream'),
+    var express = require('express'),
+		nokiaAPI = require('../nokia-api/stream'),
         redis = require('../data_access/redis'),
         config = require('../config/app_config'),
         songsSearchResults,
@@ -55,11 +56,11 @@
             res.render('answer');
         });
 
-        app.post('/addScore/:user/:score', function (req, res) {
-            if (req.params && req.params.username && req.params.score) {
-                redis.addScore(req.params.username, req.params.score);
+        app.post('/addScore', express.bodyParser(), function (req, res) {
+            if (req.body && req.body.name && req.body.score) {
+                redis.addScore(req.body.name, req.body.score);
             } else {
-                console.log('Missing value: u:' + req.params.username + ' s:' + req.params.score);
+                console.log('Missing values');
             }
         });
 

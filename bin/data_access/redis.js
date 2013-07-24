@@ -3,22 +3,17 @@ module.exports = (function(){
 		redis = require('redis'),
 		util = require('./dbutil');
 
-	function addScore(username, score, callback) {
+	function addScore(username, score) {
 		findScore(username, function(currentScore) {
 			if (!currentScore || currentScore < score) {
 				var client = redis.createClient(config.AppConfig.Redis.port, config.AppConfig.Redis.host);
 				client.ZADD(config.AppConfig.Redis.leaderboard, score, username, function(err) {
 					util.handleError(err);
 					client.quit();
-					util.safeCallback(function() {
-						callback();
-					});
 				});
 			}
 			else {
-				util.safeCallback(function() {
-					callback();
-				});
+				console.log('No high score for user '+username);
 			}
 		});
 	}

@@ -27,6 +27,7 @@
 			app.engine('.html', engines.handlebars);
 			app.use(express.static(path.join(__dirname, '/public')));
 			app.use(app.router);
+			app.use(express.bodyParser());
 		});
 
 		server.listen(app.get('port'), function () {

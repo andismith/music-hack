@@ -40,7 +40,7 @@ window.music = window.music || {};
 
 (function(rounds) {
 
-  var TOTAL_ROUNDS = 5;
+  var TOTAL_ROUNDS = 1;
 
   var currentRound = 1,
       $round = $('.score-board .round'),
@@ -212,7 +212,7 @@ window.music = window.music || {};
       type: "POST",
       url: '/addScore',
       data: {
-        'name': $('#name'),
+        'name': $('#name').val(),
         'score': window.music.score.getTotal()
       }
     })
@@ -292,6 +292,8 @@ window.music.answerWrong = window.music.answer;
     $leaderboard = $('.leaderboard');
 
   function showLeaderboard() {
+	console.log("ahgsdjaghsdjagsdjas");
+	debugger;
     $leaderboard.hide();
     $.ajax('/leaderboard')
     .done(function(data) {
