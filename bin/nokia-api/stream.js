@@ -20,7 +20,7 @@
             request('http://api.ent.nokia.com/1.x/gb/products/'+id+'/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A', function (error, response, body) {
                 //var parsedJSON = JSON.parse(body).items;
                 //route.selectedTrackResultTest = body;
-                console.log(id)
+                //console.log(body)
                 callback(id, body);
             });
         }

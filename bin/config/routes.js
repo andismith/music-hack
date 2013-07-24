@@ -33,8 +33,6 @@
                     selected: selected,
                     results: tracks
                 };
-            console.log(selected);
-
             res.send(result);
         });
 
@@ -90,12 +88,21 @@
 	        	var parsedResult = JSON.parse(selectedTrack),
 	        		result = {
 	        			name: parsedResult['name'],
-	        			from: parsedResult['takenfrom']['name'],
+	        			from: getPerformers(parsedResult['creators']['performers']),
 	        			image: parsedResult['thumbnails']['100x100']
 	        		};
                 
                 response.send(result);	        	
 	        }
+        }
+
+        function getPerformers(performers) {
+            var performersList = [];
+            for (var i = 0; i < performers.length; i++) {
+                performersList.push(performers[i].name);
+            }
+
+            return String(performersList);
         }
 
         function selectRandomTracks(tracks) {

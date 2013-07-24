@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <title>Music Hack</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+
+    <link rel="stylesheet" href="/css/common.css" />
+   
+    <script src="/js/libs/modernizr-2.6.2.js"></script>
+  </head>
+  <body data-page-id="question">
+
+    <div class="container">
+      <h1>MusicMatch.io</h1>
+
+      <audio id="song-sample" src="http://api.ent.nokia.com/1.x/gb/products/{{selected}}/sample/?domain=music&app_id=_WN7DlNjki_uTKc7kY1A"></audio>
+
+      <section class="get-ready">
+        <a href="#" class="go button">Go</a>
+      </section>
+
+      <section class="loading">
+        <ul class="countdown">
+          <li class="count-3">3</li>
+          <li class="count-2">2</li>
+          <li class="count-1">1</li>
+        </ul>
+      </section>
+
+      <section class="question">
+
+        <ul class="options">
+          {{#each results}}
+          <li><a href="#" data-icon="check" data-music-id="{{this.id}}">{{ this.name }}</a></li>
+          {{/each}}
+        </ul>
+
+      </section>
+
+      <div class="remaining">
+        <p class="timer"><span></span></p>
+      </div>
+    </div>
+   
+    <script src="/js/libs/jquery-1.10.2.min.js"></script>
+    <script src="http://js.pusher.com/2.1/pusher.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

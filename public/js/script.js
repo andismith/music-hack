@@ -214,11 +214,10 @@ window.music = window.music || {};
     })
     .done(function(data) {
       var $answer = $('.answer');
-
-      $answer
-      .find('.song').html(data.name)
-      .find('.artist').html(data.from)
-      .find('.thumbnail').prop('src', data.image);
+     
+      $answer.find('.song').html(data.name);
+      $answer.find('.artist').html(data.from);
+      $answer.find('.thumbnail').prop('src', data.image);
       $answer.show();
     });
   }
