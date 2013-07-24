@@ -66,7 +66,11 @@
         });
 
         app.get('/leaderboard', function (req, res) {
-            redis.leaderboard(10);
+            redis.leaderboard(10, function(leaderboard) {
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.write(JSON.stringify(leaderboard));
+				res.end();
+			});
         });
 
         function getSelectedTrackId(tracks) {
